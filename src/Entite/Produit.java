@@ -113,6 +113,10 @@ public class Produit {
         return nom_image;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public double getPoid() {
         return poid;
     }

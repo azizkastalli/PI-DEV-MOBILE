@@ -5,6 +5,7 @@
  */
 package Gui;
 
+import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
@@ -23,15 +24,15 @@ public class EspaceMagasin {
         
     public EspaceMagasin() {
         f = new Form(new BoxLayout(BoxLayout.X_AXIS));
-        Label gestion = new Label("gestion");
-        Label ajout = new Label("ajout");
+        Button gestion = new Button("gestion");
+        Button ajout = new Button("ajout");
         Container gestionEncheres = new Container();
         Container ajoutEncheres = new Container();
         gestionEncheres.add(gestion);
         ajoutEncheres.add(ajout);
         f.addAll(gestionEncheres,ajoutEncheres);
         
-        ajoutEncheres.addPointerPressedListener(new ActionListener() {
+        ajout.addPointerPressedListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 try {
@@ -44,7 +45,7 @@ public class EspaceMagasin {
             }
         });
         
-        gestionEncheres.addPointerPressedListener(new ActionListener() {
+        gestion.addPointerPressedListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 try {

@@ -6,6 +6,8 @@
 package Service;
 
 import Entite.Participantsencheres;
+import com.codename1.io.ConnectionRequest;
+import com.codename1.io.NetworkManager;
 import java.util.ArrayList;
 
 /**
@@ -16,8 +18,18 @@ public class ServiceParticipantEncheres implements IntService<Participantsencher
 
     @Override
     public void Create(Participantsencheres obj) {
-      //To change body of generated methods, choose Tools | Templates.
-    }
+ /* ConnectionRequest con = new ConnectionRequest();
+        String Url = "http://41.226.11.243:10004/tasks/" + ta.getNom() + "/" + ta.getEtat();
+        con.setUrl(Url);
+        
+        System.out.println("tt");
+
+        con.addResponseListener((e) -> {
+            String str = new String(con.getResponseData());
+            System.out.println(str);
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+   */ }
 
     @Override
     public void Delete(Participantsencheres obj) {

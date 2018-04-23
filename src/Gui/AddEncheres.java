@@ -14,9 +14,11 @@ import com.codename1.components.ImageViewer;
 import com.codename1.components.SpanLabel;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
+import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.TextField;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.spinner.DateTimeSpinner;
@@ -38,17 +40,24 @@ public class AddEncheres {
          produits = new Container(new BoxLayout(BoxLayout.Y_AXIS)) ;
          ServiceProduit serviceProduit=new ServiceProduit();
          ArrayList<Produit> listeProduits = serviceProduit.getAll();
-         
+         System.out.println(listeProduits);
+   
       for(Produit p : listeProduits)
       {
-          ImageViewer img = new ImageViewer(Image.createImage(p.getNom_image()));
+         // bloc de creation d'image 
+          ImageViewer image = new ImageViewer();
+          Image placeholder = Image.createImage( 200, 200, 0xbfc9d2); 
+          EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
+          Image img=URLImage.createToStorage(encImage, p.getLabel() ,"http://localhost/pidev8.0/web/images/gallery/"+p.getNom_image(), URLImage.RESIZE_SCALE);
+          image.setImage(img);
+          
           SpanLabel label = new SpanLabel(p.getLabel());
           TextField SeuilMise = new TextField("placer le seuil de mise ici ");
           DateTimeSpinner dateEncheres = new DateTimeSpinner();
-          Button add = new Button();
+          Button add = new Button("Ajouter");
 
           Container c =new Container(new BoxLayout(BoxLayout.Y_AXIS));
-          c.addAll(img,label,SeuilMise,dateEncheres,add);
+          c.addAll(image,label,SeuilMise,dateEncheres,add);
           produits.add(c);
             
           add.addActionListener(new ActionListener() {
