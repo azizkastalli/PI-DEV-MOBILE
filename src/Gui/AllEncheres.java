@@ -12,9 +12,9 @@ import Service.ServiceEncheres;
 import Service.ServiceParticipantEncheres;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.SpanLabel;
+import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
-import com.codename1.ui.Dialog;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
@@ -39,6 +39,10 @@ public class AllEncheres {
          ServiceEncheres serviceEncheres=new ServiceEncheres();
          ArrayList<Encheres> listeEncheres = serviceEncheres.getAll();
          System.out.println("listaa : "+listeEncheres);
+         
+          f.getToolbar().addCommandToRightBar("back", null, (ev)->{EspaceMagasin EM=new EspaceMagasin();
+          EM.getF().show();
+          });
          
          for(Encheres e : listeEncheres)
       {
@@ -66,9 +70,11 @@ public class AllEncheres {
                  //inscription à une enchere
                  Participantsencheres participant = new Participantsencheres();
                  ServiceParticipantEncheres Serviceparticipants = new ServiceParticipantEncheres();
-                 participant.setDebut_session(e.getDate_debut());
+                 String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(e.getDate_debut());
+                 
+                 participant.setDebut_session(date);
                  participant.setId_session(e.getId_encheres());
-                 participant.setId_user(0);
+                 participant.setId_user(2);
                  participant.setNum("20435370");
                  Serviceparticipants.Create(participant);
               }
@@ -80,10 +86,8 @@ public class AllEncheres {
                  //quitter une encheres
                  Participantsencheres participant = new Participantsencheres();
                  ServiceParticipantEncheres Serviceparticipants = new ServiceParticipantEncheres();
-                 participant.setDebut_session(e.getDate_debut());
                  participant.setId_session(e.getId_encheres());
-                 participant.setId_user(0);
-                 participant.setNum("");
+                 participant.setId_user(2);
                  Serviceparticipants.Delete(participant);
               }
           });

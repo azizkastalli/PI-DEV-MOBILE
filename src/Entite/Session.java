@@ -20,22 +20,6 @@ public class Session {
   
     public Session(){}
   
-    //constructeur pour select ou delete
-    public Session(int id, String etat,double derniere_mise,String img,String NomProduit,String gagnant) {
-        this.id=id;
-        this.derniere_mise = derniere_mise;
-        this.etat = etat;
-        this.NomProduit=NomProduit;
-        this.gagnant=gagnant;
-    }
-    
-    //constructeru pour update ou add 
-    public Session(double derniere_mise, String etat, String id_gagnant) {
-        this.derniere_mise = derniere_mise;
-        this.etat = etat;
-        this.id_gagnant = id_gagnant;
-    }
-
     public double getDerniere_mise() {
         return derniere_mise;
     }

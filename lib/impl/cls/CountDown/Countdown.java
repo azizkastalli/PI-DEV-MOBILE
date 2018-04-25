@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Entite;
+package CountDown;
 
 import com.codename1.ui.Container;
 import com.codename1.ui.Label;

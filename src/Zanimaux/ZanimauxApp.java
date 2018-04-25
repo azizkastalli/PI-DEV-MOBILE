@@ -60,15 +60,16 @@ public class ZanimauxApp {
         
          EspaceMagasin EM = new EspaceMagasin();
          EM.getF().show();
-      /*      
+     /*       
         try {
             AllEncheres encheres = new AllEncheres();
             encheres.getF().show();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
-        }0
-         
-       */
+        }
+       
+*/  
+       
     }
 
     public void stop() {

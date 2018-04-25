@@ -18,22 +18,42 @@ public class ServiceParticipantEncheres implements IntService<Participantsencher
 
     @Override
     public void Create(Participantsencheres obj) {
- /* ConnectionRequest con = new ConnectionRequest();
-        String Url = "http://41.226.11.243:10004/tasks/" + ta.getNom() + "/" + ta.getEtat();
-        con.setUrl(Url);
+        System.out.println("id session : "+obj.getId_session());
+        System.out.println("date : "+ obj.getDebut_session());
+        System.out.println("id user : "+ obj.getId_user());
+        System.out.println("numero : "+ obj.getNum());
+
+        ConnectionRequest con = new ConnectionRequest();
+        String Url = "http://localhost/pidev8.0/web/app_dev.php/CreateParticipants/"
+                +obj.getId_session()+"/"
+                +obj.getDebut_session()+"/"
+                +obj.getId_user()+"/"
+                +obj.getNum();
         
-        System.out.println("tt");
+        con.setUrl(Url);
 
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
             System.out.println(str);
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
-   */ }
+    }
 
     @Override
     public void Delete(Participantsencheres obj) {
-   //To change body of generated methods, choose Tools | Templates.
+           
+    ConnectionRequest con = new ConnectionRequest();
+        String Url = "http://localhost/pidev8.0/web/app_dev.php/DeleteParticipants/"+obj.getId_user()+"/"
+                +obj.getId_session();
+        
+        con.setUrl(Url);
+
+        con.addResponseListener((e) -> {
+            String str = new String(con.getResponseData());
+            System.out.println(str);
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+    
     }
 
     @Override

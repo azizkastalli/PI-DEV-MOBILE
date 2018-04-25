@@ -9,18 +9,21 @@ import Entite.Encheres;
 import Service.ServiceEncheres;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.SpanLabel;
+import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
+import com.codename1.ui.Display;
+import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.TextField;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
-import com.codename1.ui.spinner.DateTimeSpinner;
+import com.codename1.ui.spinner.Picker;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -33,22 +36,40 @@ public class UpdateDeleteEncheres {
     
     public UpdateDeleteEncheres() throws IOException {
         
-        f = new Form();
+         f = new Form();
          encheres = new Container(new BoxLayout(BoxLayout.Y_AXIS)) ;
          ServiceEncheres serviceEncheres=new ServiceEncheres();
          ArrayList<Encheres> listeEncheres = serviceEncheres.getAll();
          
+          f.getToolbar().addCommandToRightBar("back", null, (ev)->{EspaceMagasin EM=new EspaceMagasin();
+          EM.getF().show();
+          });
+         
       for(Encheres e : listeEncheres)
       {
-          ImageViewer img = new ImageViewer(Image.createImage(e.getNom_image()));
+          //1er bloc : creation d'image 
+          ImageViewer image = new ImageViewer();
+          Image placeholder = Image.createImage( 200, 200, 0xbfc9d2); 
+          EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
+          Image img=URLImage.createToStorage(encImage, e.getLabel() ,"http://localhost/pidev8.0/web/images/gallery/"+e.getNom_image(), URLImage.RESIZE_SCALE);
+          image.setImage(img);
+
+          //2eme bloc : les informations de l'enchere
           SpanLabel label = new SpanLabel(e.getLabel());
-          TextField SeuilMise = new TextField((int) e.getSeuil_mise());
-          DateTimeSpinner dateEncheres = new DateTimeSpinner();
-          Button update = new Button();
-          Button delete = new Button();
+          TextField SeuilMise = new TextField(Double.toString(e.getSeuil_mise()));
+          Picker dateEncheres = new Picker();
+          dateEncheres.setDate(e.getDate_debut());
+          Picker heureEncheres = new Picker();
+          heureEncheres.setType(Display.PICKER_TYPE_TIME);
+          heureEncheres.setTime(Integer.parseInt(e.getDate_debut().toString().substring(11,13)) 
+                  , Integer.parseInt(e.getDate_debut().toString().substring(14,16)));
+
+          //dernier bloc : les bouttons
+          Button update = new Button("update");
+          Button delete = new Button("Delete");
 
           Container c =new Container(new BoxLayout(BoxLayout.Y_AXIS));
-          c.addAll(img,label,SeuilMise,dateEncheres,update);
+          c.addAll(image,label,SeuilMise,dateEncheres,heureEncheres,update,delete);
           encheres.add(c);
             
           //update enchere
@@ -56,13 +77,15 @@ public class UpdateDeleteEncheres {
               @Override
               public void actionPerformed(ActionEvent evt) {
                      //controle ensuite mise à jours
-                 Date date = dateEncheres.getCurrentDate();
-                 
+
+                String  stringdate = new SimpleDateFormat("yyyy-MM-dd").format(dateEncheres.getDate())
+                                       +" "+heureEncheres.getText()+":00";
+                    
                  double mise = Double.parseDouble(SeuilMise.getText());    
                  Encheres  E = new Encheres();
                  E.setId_encheres(e.getId_encheres());
                  E.setSeuil_mise(mise);
-               //  E.setDate_debut();
+                 E.setStringdate_debut(stringdate);
                  ServiceEncheres serviceEncheres=new ServiceEncheres();
                  serviceEncheres.Update(E);
               }

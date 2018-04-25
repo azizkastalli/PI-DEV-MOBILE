@@ -30,14 +30,13 @@ public class ServiceEncheres implements IntService<Encheres> {
     @Override
     public void Create(Encheres obj) {
       ConnectionRequest con = new ConnectionRequest();
-        String Url = "http://localhost/pidev8.0/web/app_dev.php/CreateEncheres";
+      String Url = "http://localhost/pidev8.0/web/app_dev.php/CreateEncheres/"
+                +obj.getSeuil_mise()+"/"
+                +obj.getStringdate_debut()+"/"
+                +obj.getId_cible()
+                +"/1";
+        
         con.setUrl(Url);
-        con.setPost(true);
-
-        con.addArgument("DateDebut",obj.getDate_debut().toString());
-        con.addArgument("IdCible",Integer.toString(obj.getId_cible()));
-        con.addArgument("SeuilMise",Double.toString(obj.getSeuil_mise()));
-        con.addArgument("IdProprietaire","1");
 
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
@@ -49,10 +48,15 @@ public class ServiceEncheres implements IntService<Encheres> {
     @Override
     public void Update(Encheres obj) {
       ConnectionRequest con = new ConnectionRequest();
-     //   String Url = "http://127.0.0.1:3306/tasks/" + ta.getNom() + "/" + ta.getEtat();
-       // con.setUrl(Url);
-
-        //System.out.println("tt");
+        System.out.println("id : "+obj.getId_encheres());
+        System.out.println("mise : "+obj.getSeuil_mise());
+        System.out.println("date : "+obj.getStringdate_debut());
+        String Url = "http://localhost/pidev8.0/web/app_dev.php/UpdateEncheres/"+obj.getId_encheres()
+                +"/"+obj.getSeuil_mise()
+                +"/"+obj.getStringdate_debut();
+        
+        con.setUrl(Url);
+        
 
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
@@ -79,7 +83,8 @@ public class ServiceEncheres implements IntService<Encheres> {
                     List<Map<String, Object>> list = (List<Map<String, Object>>) encheres1.get("root");
                     for (Map<String, Object> obj : list) {
                         Encheres encheres = new Encheres();
-                                
+                            
+                        encheres.setId_encheres(Integer.parseInt((String) obj.get("id_encheres")));
                         encheres.setNom_image(obj.get("nom_image").toString());
                         encheres.setLabel(obj.get("label").toString());
                         encheres.setSeuil_mise(Double.parseDouble(obj.get("seuil_mise").toString()));
@@ -116,7 +121,18 @@ public class ServiceEncheres implements IntService<Encheres> {
 
     @Override
     public void Delete(Encheres obj) {
-      //To change body of generated methods, choose Tools | Templates.
+    ConnectionRequest con = new ConnectionRequest();
+        System.out.println("delete id : "+obj.getId_encheres());
+        String Url = "http://localhost/pidev8.0/web/app_dev.php/DeleteEncheres/"+obj.getId_encheres();
+        con.setUrl(Url);
+        
+
+        con.addResponseListener((e) -> {
+            String str = new String(con.getResponseData());
+            System.out.println(str);
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+
     }
 
  

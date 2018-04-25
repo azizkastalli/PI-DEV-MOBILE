@@ -25,53 +25,12 @@ public class Encheres {
    private double seuil_mise;
    private String etat;
    private Date   date_debut;
+   private String   stringdate_debut;
+   
  
   
    //constructeur vide
     public Encheres() {}
- 
-    //constructeur pour afficher les encheres
-    public Encheres(String caracteristiques, String description, String categorie, String nom_proprietaire, String nom_image, double poid, String label, int id_encheres, double seuil_mise, Date date_debut) {
-        this.caracteristiques = caracteristiques;
-        this.description = description;
-        this.categorie = categorie;
-        this.nom_proprietaire = nom_proprietaire;
-        this.poid = poid;
-        this.label = label;
-        this.nom_image=nom_image;
-        this.id_encheres = id_encheres;
-        this.seuil_mise = seuil_mise;
-        this.date_debut = date_debut;
-    }
-    
-    public Encheres(String etat,String caracteristiques, String description, String categorie, String nom_proprietaire, String nom_image, double poid, String label, int id_encheres, double seuil_mise, Date date_debut) {
-        this.caracteristiques = caracteristiques;
-        this.description = description;
-        this.categorie = categorie;
-        this.nom_proprietaire = nom_proprietaire;
-        this.poid = poid;
-        this.label = label;
-        this.nom_image=nom_image;
-        this.id_encheres = id_encheres;
-        this.seuil_mise = seuil_mise;
-        this.date_debut = date_debut;
-        this.etat=etat;
-    }
-
-    // quartz constructor
-        public Encheres(int id_encheres, Date date_debut,String label) {
-        this.id_encheres = id_encheres;
-        this.date_debut = date_debut;
-        this.label=label;
-    }
-    
-    //constructeur pour ajouter et modifier les encheres
-    public Encheres(int id_encheres, int id_cible, double seuil_mise, Date date_debut) {
-        this.id_encheres = id_encheres;
-        this.id_cible = id_cible;
-        this.seuil_mise = seuil_mise;
-        this.date_debut = date_debut;
-    }
 
     public String getCaracteristiques() {
         return caracteristiques;
@@ -167,6 +126,14 @@ public class Encheres {
 
     public void setEtat(String etat) {
         this.etat = etat;
+    }
+
+    public String getStringdate_debut() {
+        return stringdate_debut;
+    }
+
+    public void setStringdate_debut(String stringdate_debut) {
+        this.stringdate_debut = stringdate_debut;
     }
   
 

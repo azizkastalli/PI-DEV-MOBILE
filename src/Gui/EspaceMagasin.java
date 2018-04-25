@@ -8,7 +8,6 @@ package Gui;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Form;
-import com.codename1.ui.Label;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
@@ -26,13 +25,16 @@ public class EspaceMagasin {
         f = new Form(new BoxLayout(BoxLayout.X_AXIS));
         Button gestion = new Button("gestion");
         Button ajout = new Button("ajout");
+        Button encheres = new Button("Encheres");
         Container gestionEncheres = new Container();
         Container ajoutEncheres = new Container();
+        Container encheresEncheres = new Container();
         gestionEncheres.add(gestion);
         ajoutEncheres.add(ajout);
-        f.addAll(gestionEncheres,ajoutEncheres);
+        encheresEncheres.add(encheres);
+        f.addAll(gestionEncheres,ajoutEncheres,encheresEncheres);
         
-        ajout.addPointerPressedListener(new ActionListener() {
+        ajout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 try {
@@ -45,7 +47,7 @@ public class EspaceMagasin {
             }
         });
         
-        gestion.addPointerPressedListener(new ActionListener() {
+        gestion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 try {
@@ -57,6 +59,17 @@ public class EspaceMagasin {
            
             }
         });
+        
+        encheres.addActionListener(
+        (evt) -> {
+                 try {
+            AllEncheres encheress = new AllEncheres();
+            encheress.getF().show();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        }
+        );
     }
 
     public Form getF() {

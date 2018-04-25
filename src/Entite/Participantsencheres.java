@@ -5,8 +5,6 @@
  */
 package Entite;
 
-import java.util.Date;
-
 /**
  *
  * @author azizkastalli
@@ -16,31 +14,9 @@ public class Participantsencheres {
     private int id_session;
     private int id_user;
     private String  num;
-    private Date debut_session;
+    private String debut_session;
 
     public Participantsencheres() {
-    }
-
-    
-    public Participantsencheres(int id_session, int id_user, Date debut_session,String num) {
-        this.id = id;
-        this.id_session = id_session;
-        this.id_user = id_user;
-        this.debut_session = debut_session;
-        this.num=num;
-    }
-    
-    public Participantsencheres(int id, int id_session, int id_user, Date debut_session) {
-        this.id = id;
-        this.id_session = id_session;
-        this.id_user = id_user;
-        this.debut_session = debut_session;
-    }
-
-    public Participantsencheres(int id_session, int id_user, Date debut_session) {
-        this.id_session = id_session;
-        this.id_user = id_user;
-        this.debut_session = debut_session;
     }
 
     public int getId() {
@@ -55,7 +31,7 @@ public class Participantsencheres {
         return id_user;
     }
 
-    public Date getDebut_session() {
+    public String getDebut_session() {
         return debut_session;
     }
 
@@ -71,7 +47,7 @@ public class Participantsencheres {
         this.id_user = id_user;
     }
 
-    public void setDebut_session(Date debut_session) {
+    public void setDebut_session(String debut_session) {
         this.debut_session = debut_session;
     }
 
