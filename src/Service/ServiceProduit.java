@@ -38,35 +38,47 @@ public class ServiceProduit implements IntService<Produit> {
       //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+ @Override
     public ArrayList<Produit> getAll() {
-        
-   ArrayList<Produit> listProduit = new ArrayList<>();
+       
+        ArrayList<Produit> listTasks = new ArrayList<>();
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/pidev8.0/web/app_dev.php/allProduits");
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/all");
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-               // listTasks = getListTask(new String(con.getResponseData()));
                 JSONParser jsonp = new JSONParser();
                 
                 try {
-                    Map<String, Object> produits = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
-                    System.out.println(produits);
-                    List<Map<String, Object>> list = (List<Map<String, Object>>) produits.get("root");
-                    
+                    Map<String, Object> tasks = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
+                    System.out.println(tasks);
+                    List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
                     for (Map<String, Object> obj : list) {
-                        String id = obj.get("id").toString();
-                        double d = Double.parseDouble(id);
-                        Double dd= new Double(d);
-                        int idconverted = dd.intValue();
+                        Produit prod = new Produit();
+                        /*
+                        float poi = Float.parseFloat(obj.get("poid").toString());
+                        float prixn = Float.parseFloat(obj.get("prix_nouv").toString());
+                        float prixa = Float.parseFloat(obj.get("prix_ancien").toString());
+                        float idprop = Integer.parseInt(obj.get("id_propietaire").toString());
+                        float quant = Integer.parseInt(obj.get("quantite").toString());
+                        float vot = Integer.parseInt(obj.get("vote").toString());
+                        prod.setCaracteristiques(obj.get("caracteristiques").toString());
+                        prod.setDescription(obj.get("description").toString());
+                        prod.setId_categorie(obj.get("description").toString());
+                        prod.setId_propietaire((int) idprop);
+                        prod.setNom_image(obj.get("nom_image").toString());
+                        prod.setPoid(poi);
+                        prod.setPrix_ancien(prixa);
                         
-                        Produit produit = new Produit();
-                        produit.setId(idconverted);
-                        produit.setNom_image(obj.get("nomImage").toString());
-                        produit.setLabel(obj.get("label").toString());
+                        prod.setQuantite((int) quant);
+                        prod.setVote(vot);
+                        */
+                       // float prixn = Float.parseFloat(obj.get("prix_nouv").toString());
+                        prod.setLabel(obj.get("label").toString());
+                       prod.setNom_image(obj.get("nomImage").toString());
+                       // prod.setPrix_nouv(prixn);
                         
-                        listProduit.add(produit);
+                        listTasks.add(prod);
 
                     }
                 } catch (IOException ex) {
@@ -76,9 +88,7 @@ public class ServiceProduit implements IntService<Produit> {
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
-
-        return listProduit;
-
+        return listTasks;
     }
 
     @Override
