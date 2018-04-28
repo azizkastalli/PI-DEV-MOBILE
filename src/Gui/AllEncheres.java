@@ -16,9 +16,11 @@ import com.codename1.components.SpanLabel;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.ButtonGroup;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
+import com.codename1.ui.Label;
 import com.codename1.ui.RadioButton;
 import com.codename1.ui.TextField;
 import com.codename1.ui.URLImage;
@@ -45,25 +47,68 @@ public class AllEncheres {
          ArrayList<Encheres> listeEncheres = serviceEncheres.getAll();
          ServiceParticipantEncheres ServiceParticipant=new ServiceParticipantEncheres();
          ArrayList<Integer> IdEncheres = ServiceParticipant.verificationParticipation(1);
-         TextField recherche = new  TextField();
-         
-         RadioButton rb1 = new RadioButton("All");
-         RadioButton rb2 = new RadioButton("Participe"); 
-         RadioButton rb3 = new RadioButton("prticipe pas");
-         new ButtonGroup(rb1, rb2, rb3);
-         rb1.setSelected(true);
-         Container Radio = new Container(new BoxLayout(BoxLayout.Y_AXIS));
-         Radio.addAll(rb1,rb2,rb3);
-         
+          TextField recherche = new  TextField();
+          RadioButton rb1 = new RadioButton("All");
+          RadioButton rb2 = new RadioButton("Participe"); 
+          RadioButton rb3 = new RadioButton("prticipe pas");
+          new ButtonGroup(rb1, rb2, rb3);
+          rb1.setSelected(true);
+          Container Radio = new Container(new BoxLayout(BoxLayout.Y_AXIS));
+          Radio.addAll(rb1,rb2,rb3);
+          f.getToolbar().addComponentToSideMenu(recherche);
+          f.getToolbar().addComponentToSideMenu(Radio);
+          
          //radio buttons listener
          rb1.addActionListener((evt) -> {
-             System.out.println("rb1");
+                encheres.removeAll();
+                 for (Encheres e : listeEncheres) 
+                 { if(recherche.getText().equals(""))
+                     encheres.add(SortEncheres.get(e.getId_encheres()));
+                  else
+                   { 
+                       if(e.getLabel().startsWith(recherche.getText()))
+                            encheres.add(SortEncheres.get(e.getId_encheres()));
+                    }
+                 }
          });
          rb2.addActionListener((evt) -> {
-             System.out.println("rb2");
+                encheres.removeAll();
+                 for (Encheres e : listeEncheres) 
+                 { if(recherche.getText().equals(""))
+                     { 
+                          for(Integer id : IdEncheres )
+                             {
+                                if(e.getId_encheres()==id)
+                                    encheres.add(SortEncheres.get(e.getId_encheres()));}
+                                    }
+                  else
+                   { 
+                            for(Integer id : IdEncheres )
+                             {
+                                if(e.getId_encheres()==id && e.getLabel().startsWith(recherche.getText()))
+                                    encheres.add(SortEncheres.get(e.getId_encheres()));}
+                    }
+                 }
          });
+         
          rb3.addActionListener((evt) -> {
-             System.out.println("rb3");
+                encheres.removeAll();
+                 for (Encheres e : listeEncheres) 
+                 { if(recherche.getText().equals(""))
+                     { 
+                          for(Integer id : IdEncheres )
+                             {
+                                if(e.getId_encheres()!=id)
+                                    encheres.add(SortEncheres.get(e.getId_encheres()));}
+                                    }
+                  else
+                   { 
+                            for(Integer id : IdEncheres )
+                             {
+                                if(e.getId_encheres()!=id && e.getLabel().startsWith(recherche.getText()))
+                                    encheres.add(SortEncheres.get(e.getId_encheres()));}
+                    }
+                 }
          });
          
          
@@ -72,15 +117,57 @@ public class AllEncheres {
              public void dataChanged(int type, int index) {
                  encheres.removeAll();
                  for (Encheres e : listeEncheres) 
-                 { if(recherche.getText().equals(""))
-                       encheres.add(SortEncheres.get(e.getId_encheres()));     
-                   else if( (e.getLabel().startsWith(recherche.getText())) )
-                        encheres.add(SortEncheres.get(e.getId_encheres()));                     
-                   else if( (e.getLabel().startsWith(recherche.getText())) )
-                        encheres.add(SortEncheres.get(e.getId_encheres()));                     
-                    }                 
+                 { 
+                     if(recherche.getText().equals(""))
+                         {
+                      if(rb1.isSelected())
+                         encheres.add(SortEncheres.get(e.getId_encheres()));
+                      else if(rb2.isSelected())
+                      {
+                            for(Integer id : IdEncheres )
+                             {
+                                if(e.getId_encheres()==id)
+                                    encheres.add(SortEncheres.get(e.getId_encheres()));
+                                    }
+                      }
+                      else if (rb3.isSelected())
+                      {
+                          for(Integer id : IdEncheres )
+                             {
+                                if(e.getId_encheres()!=id)
+                                    encheres.add(SortEncheres.get(e.getId_encheres()));
+                                    }
+                      }
+                           }  
+                     
+                     else if( (e.getLabel().startsWith(recherche.getText())) )
+                     {
+                       if(rb1.isSelected())
+                         encheres.add(SortEncheres.get(e.getId_encheres()));
+                      else if(rb2.isSelected())
+                      {
+                            for(Integer id : IdEncheres )
+                             {
+                                if(e.getId_encheres()==id)
+                                    encheres.add(SortEncheres.get(e.getId_encheres()));
+                                    }
+                      }
+                      else if (rb3.isSelected())
+                      {
+                           for(Integer id : IdEncheres )
+                             {
+                                if(e.getId_encheres()!=id)
+                                    encheres.add(SortEncheres.get(e.getId_encheres()));
+                                    }
+                       }
+                     }                    
+                   }                 
              }
          });
+         
+         
+        
+        
           
        
           f.getToolbar().addCommandToRightBar("back", null, (ev)->{EspaceMagasin EM=new EspaceMagasin();
@@ -128,19 +215,22 @@ public class AllEncheres {
                  participant.setId_user(1);
                  participant.setNum("20435370");
                  Serviceparticipants.Create(participant);  
+                 IdEncheres.add(e.getId_encheres());
                }
                else
                {
+                  if (Dialog.show("Confirmer", "Voulez vous vraiment ne plus participer à cette encheres ?", "Oui", "Non")) 
+                   {             
                  participant.setId_session(e.getId_encheres());
                  participant.setId_user(1);
                  Serviceparticipants.Delete(participant);
+                 IdEncheres.remove(e.getId_encheres());        
+                   }
                }
           });
           
       }
          
-      f.add(recherche);
-      f.add(Radio);
       f.add(encheres);
          
     }
