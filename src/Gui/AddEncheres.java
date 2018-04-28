@@ -15,6 +15,7 @@ import com.codename1.components.SpanLabel;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
@@ -26,6 +27,7 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.spinner.Picker;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -41,7 +43,6 @@ public class AddEncheres {
          produits = new Container(new BoxLayout(BoxLayout.Y_AXIS)) ;
          ServiceProduit serviceProduit=new ServiceProduit();
          ArrayList<Produit> listeProduits = serviceProduit.getAll();
-         System.out.println(listeProduits);
           
          f.getToolbar().addCommandToRightBar("back", null, (ev)->{EspaceMagasin EM=new EspaceMagasin();
           EM.getF().show();
@@ -71,19 +72,41 @@ public class AddEncheres {
           add.addActionListener(new ActionListener() {
               @Override
               public void actionPerformed(ActionEvent evt) {
+               
+                  Encheres  E = new Encheres();
+                  E.setId_cible(p.getId());
+                  boolean verifmise=false;
+                  boolean verifdate=false;
                   
-                //converting date and time picker format to string format     
-                 String  stringdate = new SimpleDateFormat("yyyy-MM-dd").format(dateEncheres.getDate())
+                  Date currDate = new Date();
+                  if( (dateEncheres.getDate().getTime()-currDate.getTime()) <= 0 )
+                  {
+                    Dialog.show("Date incorrect", "SVP saisissez une date correcte ", "OK", null);
+                  } 
+                  else 
+                  {
+                     verifdate=true;
+                    //converting date and time picker format to string format     
+                    String  stringdate = new SimpleDateFormat("yyyy-MM-dd").format(dateEncheres.getDate())
                                        +" "+heureEncheres.getText()+":00";
-             
-                double mise = Double.parseDouble(SeuilMise.getText());    
+                                        E.setStringdate_debut(stringdate);
+                  }
+              
+             try{
+                double mise = Double.parseDouble(SeuilMise.getText());  
+                E.setSeuil_mise(mise);
+                verifmise=true;
+                }
+             catch(Exception ex)
+             {
+                 Dialog.show("Mise incorrect", "SVP saisissez un reel ", "OK", null);
+             }
 
-                      Encheres  E = new Encheres();
-                      E.setId_cible(p.getId());
-                      E.setSeuil_mise(mise);
-                      E.setStringdate_debut(stringdate);
-                      ServiceEncheres serviceEncheres=new ServiceEncheres();
-                      serviceEncheres.Create(E);
+             if(verifdate && verifmise)
+             {ServiceEncheres serviceEncheres=new ServiceEncheres();
+              serviceEncheres.Create(E);
+              Dialog.show("Ajout avec succes", "le produit "+p.getLabel()+" est ajouté aux encheres", "OK", null);
+}
                   
                  
               }

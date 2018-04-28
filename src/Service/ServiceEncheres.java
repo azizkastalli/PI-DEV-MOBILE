@@ -40,7 +40,6 @@ public class ServiceEncheres implements IntService<Encheres> {
 
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
-            System.out.println(str);
         });        
         NetworkManager.getInstance().addToQueueAndWait(con);
     }
@@ -48,9 +47,7 @@ public class ServiceEncheres implements IntService<Encheres> {
     @Override
     public void Update(Encheres obj) {
       ConnectionRequest con = new ConnectionRequest();
-        System.out.println("id : "+obj.getId_encheres());
-        System.out.println("mise : "+obj.getSeuil_mise());
-        System.out.println("date : "+obj.getStringdate_debut());
+       
         String Url = "http://localhost/pidev8.0/web/app_dev.php/UpdateEncheres/"+obj.getId_encheres()
                 +"/"+obj.getSeuil_mise()
                 +"/"+obj.getStringdate_debut();
@@ -60,7 +57,6 @@ public class ServiceEncheres implements IntService<Encheres> {
 
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
-            System.out.println(str);
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
     }
@@ -79,7 +75,6 @@ public class ServiceEncheres implements IntService<Encheres> {
                          
                 try {
                     Map<String, Object> encheres1 = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
-                    System.out.println(encheres1);
                     List<Map<String, Object>> list = (List<Map<String, Object>>) encheres1.get("root");
                     for (Map<String, Object> obj : list) {
                         Encheres encheres = new Encheres();
@@ -89,7 +84,7 @@ public class ServiceEncheres implements IntService<Encheres> {
                         encheres.setLabel(obj.get("label").toString());
                         encheres.setSeuil_mise(Double.parseDouble(obj.get("seuil_mise").toString()));
                         String date1 = obj.get("date_debut").toString();
-
+                        
                         DateFormat format = new SimpleDateFormat("yyyy-MM-dd H:m");
                          Date date = null;
                      try {
@@ -108,7 +103,6 @@ public class ServiceEncheres implements IntService<Encheres> {
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
-         System.out.println("just before sending : " + listEncheres);
         return listEncheres;
 
 }
@@ -122,14 +116,12 @@ public class ServiceEncheres implements IntService<Encheres> {
     @Override
     public void Delete(Encheres obj) {
     ConnectionRequest con = new ConnectionRequest();
-        System.out.println("delete id : "+obj.getId_encheres());
         String Url = "http://localhost/pidev8.0/web/app_dev.php/DeleteEncheres/"+obj.getId_encheres();
         con.setUrl(Url);
         
 
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
-            System.out.println(str);
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
 

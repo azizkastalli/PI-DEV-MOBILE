@@ -5,10 +5,22 @@
  */
 package Service;
 
+import Entite.Encheres;
 import Entite.Participantsencheres;
+import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
+import com.codename1.io.JSONParser;
+import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
+import com.codename1.l10n.DateFormat;
+import com.codename1.l10n.ParseException;
+import com.codename1.l10n.SimpleDateFormat;
+import com.codename1.ui.events.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -18,10 +30,7 @@ public class ServiceParticipantEncheres implements IntService<Participantsencher
 
     @Override
     public void Create(Participantsencheres obj) {
-        System.out.println("id session : "+obj.getId_session());
-        System.out.println("date : "+ obj.getDebut_session());
-        System.out.println("id user : "+ obj.getId_user());
-        System.out.println("numero : "+ obj.getNum());
+        
 
         ConnectionRequest con = new ConnectionRequest();
         String Url = "http://localhost/pidev8.0/web/app_dev.php/CreateParticipants/"
@@ -34,7 +43,6 @@ public class ServiceParticipantEncheres implements IntService<Participantsencher
 
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
-            System.out.println(str);
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
     }
@@ -50,7 +58,6 @@ public class ServiceParticipantEncheres implements IntService<Participantsencher
 
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
-            System.out.println(str);
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
     
@@ -71,6 +78,35 @@ public class ServiceParticipantEncheres implements IntService<Participantsencher
     public Participantsencheres get(Participantsencheres obj) {
         return null;
      //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public  ArrayList<Integer> verificationParticipation(int userid)
+    {
+       ArrayList<Integer> liste = new ArrayList<>();
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/pidev8.0/web/app_dev.php/VerifParticipants/"+userid);
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+
+                JSONParser jsonp = new JSONParser();
+                         
+                try {
+                    Map<String, Object> encheres = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
+                    List<Map<String, Object>> list = (List<Map<String, Object>>) encheres.get("root");
+                  
+                    for (Map<String, Object> obj : list) {        
+                        liste.add(Integer.parseInt(obj.get("id_session").toString()));
+                    }
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return liste;
+
     }
     
 }

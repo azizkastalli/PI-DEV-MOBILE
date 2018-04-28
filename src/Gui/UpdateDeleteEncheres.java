@@ -12,6 +12,7 @@ import com.codename1.components.SpanLabel;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
@@ -24,6 +25,8 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.spinner.Picker;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+
 
 /**
  *
@@ -78,16 +81,41 @@ public class UpdateDeleteEncheres {
               public void actionPerformed(ActionEvent evt) {
                      //controle ensuite mise à jours
 
-                String  stringdate = new SimpleDateFormat("yyyy-MM-dd").format(dateEncheres.getDate())
+                  boolean verifmise=false;
+                  boolean verifdate=false;
+                  
+                  Encheres  E = new Encheres();
+                  E.setId_encheres(e.getId_encheres());
+            
+                  Date currDate = new Date();  
+                    if( (dateEncheres.getDate().getTime()-currDate.getTime()) <= 0 )
+                  {
+                    Dialog.show("Date incorrect", "SVP saisissez une date correcte ", "OK", null);
+                  } 
+                    else
+                  {
+                     verifdate=true;
+                         String  stringdate = new SimpleDateFormat("yyyy-MM-dd").format(dateEncheres.getDate())
                                        +" "+heureEncheres.getText()+":00";
-                    
-                 double mise = Double.parseDouble(SeuilMise.getText());    
-                 Encheres  E = new Encheres();
-                 E.setId_encheres(e.getId_encheres());
-                 E.setSeuil_mise(mise);
-                 E.setStringdate_debut(stringdate);
-                 ServiceEncheres serviceEncheres=new ServiceEncheres();
-                 serviceEncheres.Update(E);
+
+                         E.setStringdate_debut(stringdate);
+                  }
+              
+             try{
+                    double mise = Double.parseDouble(SeuilMise.getText());   
+                    E.setSeuil_mise(mise);
+                    verifmise=true;
+              }
+              catch(Exception ex)
+             {
+                 Dialog.show("Mise incorrect", "SVP saisissez un reel ", "OK", null);
+             }     
+                   
+              
+             if( verifmise && verifdate )    
+             { ServiceEncheres serviceEncheres=new ServiceEncheres();
+                 serviceEncheres.Update(E);}
+              Dialog.show("Mise à jour avec succes", "l'encehres "+e.getLabel()+" est modifié ", "OK", null);
               }
           });
           
@@ -99,6 +127,7 @@ public class UpdateDeleteEncheres {
                  E.setId_encheres(e.getId_encheres());
                  ServiceEncheres serviceEncheres=new ServiceEncheres();
                  serviceEncheres.Delete(E);
+                 Dialog.show("suppression avec succes", "l'encehres "+e.getLabel()+" est supprimé ", "OK", null);
               }
           });
       }
