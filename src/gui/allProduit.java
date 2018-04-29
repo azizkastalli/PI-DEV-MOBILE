@@ -37,28 +37,23 @@ import com.codename1.ui.plaf.Border;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import java.util.ArrayList;
-import org.controlsfx.control.Rating;
 
 /**
  *
- * @author HP
+ * @author HP 
  */
 public class allProduit {
-    private Form f;
+    private Form fo;
     private Container event;
-     private EncodedImage encImage;
-          private Resources theme;
-            private Rating rating;
+       
 
     public allProduit()  {
-         f = new Form();
+         fo = new Form("Les Produits ", new BoxLayout(BoxLayout.Y_AXIS));
          event = new Container(new BoxLayout(BoxLayout.Y_AXIS)) ;
          ServiceProduit SE=new ServiceProduit();
          ArrayList<Produit> listeEvent = SE.getAll();
          System.out.println("listaa : "+listeEvent);
-            
-         
-         
+       
          for(Produit e : listeEvent)
       {
           //bloc de creation d'image
@@ -76,7 +71,8 @@ public class allProduit {
               btndetail.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent evt) {
-               Form f = new Form();
+               Form f = new Form("Detais Produit", new BoxLayout(BoxLayout.Y_AXIS));
+            
                     Container SS = new Container(new BoxLayout(BoxLayout.Y_AXIS)) ;
 
            ImageViewer image = new ImageViewer();
@@ -124,16 +120,16 @@ public class allProduit {
           
       }
       
-      f.add(event);
+      fo.add(event);
          
     }
 
     public Form getF() {
-        return f;
+        return fo;
     }
 
     public void setF(Form f) {
-        this.f = f;
+        this.fo = f;
     }
     public void showForm() {
     Label ll=new Label();    
