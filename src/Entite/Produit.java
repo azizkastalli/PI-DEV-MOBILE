@@ -25,7 +25,20 @@ public class Produit {
    private String label;
 
     public Produit(){}
+
+    public Produit(String caracteristiques, String description, String id_categorie, String nom_image, double poid, double prix_nouv, int quantite, String label) {
+        this.caracteristiques = caracteristiques;
+        this.description = description;
+        this.id_categorie = id_categorie;
+        this.nom_image = nom_image;
+        this.poid = poid;
+        this.prix_nouv = prix_nouv;
+        this.quantite = quantite;
+        this.label = label;
+    }
    
+    
+    
     public Produit(String caracteristiques, String description, String etat, String id_categorie, int id_propietaire, String nom_image, double poid, double prix_ancien, double prix_nouv, int quantite, double vote, String label) {
         this.caracteristiques = caracteristiques;
         this.description = description;
