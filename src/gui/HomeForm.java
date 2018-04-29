@@ -25,8 +25,10 @@ public class HomeForm {
         Button btnajt,btnaff;
 
     public HomeForm() {
-        
-        
+
+     
+
+
         label = new Container(new BoxLayout(BoxLayout.Y_AXIS)) ;
        TextField labell = new TextField("","Nom Produit");
        TextField caracteristique = new TextField("","caracteristique");
@@ -37,7 +39,7 @@ public class HomeForm {
        TextField poid = new TextField("","poid");
        TextField quantite = new TextField("","quantite");
         
-        f2 = new Form("home");
+        f2 = new Form("Formulaire", new BoxLayout(BoxLayout.Y_AXIS));
         btnaff=new Button("Affichage");
         btnajt=new Button("Ajouter");
         label.add(labell);
