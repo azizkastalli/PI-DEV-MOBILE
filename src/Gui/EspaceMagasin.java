@@ -26,13 +26,24 @@ public class EspaceMagasin {
         Button gestion = new Button("gestion");
         Button ajout = new Button("ajout");
         Button encheres = new Button("Encheres");
+        Button actualite = new Button("Actualite");
         Container gestionEncheres = new Container();
         Container ajoutEncheres = new Container();
         Container encheresEncheres = new Container();
+        Container actualiteAnimaux = new Container();
+        actualiteAnimaux.add(actualite);
         gestionEncheres.add(gestion);
         ajoutEncheres.add(ajout);
         encheresEncheres.add(encheres);
-        f.addAll(gestionEncheres,ajoutEncheres,encheresEncheres);
+        f.addAll(gestionEncheres,ajoutEncheres,encheresEncheres,actualiteAnimaux);
+        
+        actualite.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                    Actualite news = new Actualite();
+                    news.getF().show();           
+            }
+        });
         
         ajout.addActionListener(new ActionListener() {
             @Override

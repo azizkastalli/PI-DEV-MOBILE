@@ -74,11 +74,12 @@ public class ServiceEncheres implements IntService<Encheres> {
                 JSONParser jsonp = new JSONParser();
                          
                 try {
-                    Map<String, Object> encheres1 = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
+                      Map<String, Object> encheres1 = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
                     List<Map<String, Object>> list = (List<Map<String, Object>>) encheres1.get("root");
-                    for (Map<String, Object> obj : list) {
+  
+                                    for (Map<String, Object> obj : list) {
                         Encheres encheres = new Encheres();
-                            
+                               
                         encheres.setId_encheres(Integer.parseInt((String) obj.get("id_encheres")));
                         encheres.setNom_image(obj.get("nom_image").toString());
                         encheres.setLabel(obj.get("label").toString());
