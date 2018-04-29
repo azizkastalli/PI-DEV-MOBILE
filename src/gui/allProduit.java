@@ -160,7 +160,7 @@ public class allProduit {
         public void dataChanged(int type, int index) {
             
             System.out.println("rank :"+starRank.getProgress());
-            ll.setText("rank :"+starRank.getProgress());
+            ll.setText("Vote :"+starRank.getProgress());
         }
     });
   
