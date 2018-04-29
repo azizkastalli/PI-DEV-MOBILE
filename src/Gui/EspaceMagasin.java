@@ -37,12 +37,10 @@ public class EspaceMagasin {
         ajout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                try {
-                    AddEncheres add = new AddEncheres();
+              
+                  AjoutEvent add=new AjoutEvent();
                     add.getF().show();
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
+                
            
             }
         });
@@ -63,8 +61,8 @@ public class EspaceMagasin {
         encheres.addActionListener(
         (evt) -> {
                  try {
-            AllEncheres encheress = new AllEncheres();
-            encheress.getF().show();
+           AffichageEvent ae = new AffichageEvent();
+            ae.getF().show();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }

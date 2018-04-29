@@ -27,6 +27,7 @@ public class Evenement {
    private String nom_association;
    private int id_association;
    private int id_categorie;
+   private String StringdateD;
    
     public Evenement(){}
 
@@ -69,6 +70,16 @@ public class Evenement {
 
      }
 
+  
+
+    public Evenement(String nom, String description, int nbr_participants, String StringdateD) {
+        this.nom = nom;
+        this.description = description;
+        this.nbr_participants = nbr_participants;
+        this.StringdateD = StringdateD;
+    }
+
+      
           
 
     public int getId() {
@@ -193,6 +204,14 @@ public class Evenement {
     @Override
     public String toString() {
         return "Evenement{" + "nom=" + nom + ", description=" + description + ", nbr_participants=" + nbr_participants + ", date_debut=" + date_debut + ", date_fin=" + date_fin + ", etat=" + etat + ", nom_image=" + nom_image + ", nom_association=" + nom_association + '}';
+    }
+
+    public String getStringdateD() {
+        return StringdateD;
+    }
+
+    public void setStringdateD(String StringdateD) {
+        this.StringdateD = StringdateD;
     }
 
      
