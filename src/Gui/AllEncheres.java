@@ -194,7 +194,10 @@ public class AllEncheres {
           for(Integer id : IdEncheres )
           {
              if(e.getId_encheres()==id)
-              participer.setValue(true);
+             {participer.setValue(true);
+              participer.setUIID("false");}
+             else
+               participer.setUIID("true");
           }
           
           Countdown countdown = new Countdown();
@@ -204,11 +207,13 @@ public class AllEncheres {
           encheres.add(c);
           SortEncheres.put(e.getId_encheres(),c);
           
-          participer.addActionListener((evt) -> { 
+          participer.addActionListener((evt) -> {
+              int count2 = 0;
                 Participantsencheres participant = new Participantsencheres();
                 ServiceParticipantEncheres Serviceparticipants = new ServiceParticipantEncheres();
-               if(participer.isValue())            
+               if( participer.isValue() &&  participer.getUIID().equals("true") )            
                {
+                 participer.setUIID("false");
                  String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(e.getDate_debut());
                  participant.setDebut_session(date);
                  participant.setId_session(e.getId_encheres());
@@ -217,16 +222,31 @@ public class AllEncheres {
                  Serviceparticipants.Create(participant);  
                  IdEncheres.add(e.getId_encheres());
                }
-               else
+               else 
                {
-                  if (Dialog.show("Confirmer", "Voulez vous vraiment ne plus participer à cette encheres ?", "Oui", "Non")) 
-                   {             
+                  if (Dialog.show("Confirmer", "Voulez vous vraiment ne plus participer à cette encheres ?", "Oui", "Non") && count2==0) 
+                   {
+                 count2++;      
+                 participer.setUIID("true");
                  participant.setId_session(e.getId_encheres());
                  participant.setId_user(1);
-                 Serviceparticipants.Delete(participant);
-                 IdEncheres.remove(e.getId_encheres());        
+                 Serviceparticipants.Delete(participant); 
+                 int count = 0 ;
+                 for(Integer id : IdEncheres )
+                    {
+                           if(e.getId_encheres()==id)
+                             break;
+                        count++;
+                     }
+                 IdEncheres.remove(count);
                    }
-               }
+                  else
+                  {
+                     participer.setValue(true);
+                     participer.setUIID("false");
+                   }
+                }
+              
           });
           
       }
