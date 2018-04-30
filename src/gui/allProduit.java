@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package Gui;
 
 import Entite.Produit;
 import Service.ServiceProduit;
@@ -37,25 +37,28 @@ import com.codename1.ui.plaf.Border;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author HP
  */
 public class allProduit {
-    private Form f;
+    public Form f;
     private Container event;
      private EncodedImage encImage;
           private Resources theme;
+          
 
     public allProduit()  {
          f = new Form();
          event = new Container(new BoxLayout(BoxLayout.Y_AXIS)) ;
          ServiceProduit SE=new ServiceProduit();
+         
          ArrayList<Produit> listeEvent = SE.getAll();
          System.out.println("listaa : "+listeEvent);
             
-         
+         Panier panpage = new Panier();
          
          for(Produit e : listeEvent)
       {
@@ -70,11 +73,12 @@ public class allProduit {
           
           SpanLabel label = new SpanLabel(e.getLabel());
               Button    btndetail=new Button("Details");
+              
                 
               btndetail.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent evt) {
-               Form f = new Form();
+               Form f2 = new Form("haha",new BoxLayout(BoxLayout.Y_AXIS));
                     Container SS = new Container(new BoxLayout(BoxLayout.Y_AXIS)) ;
 
            ImageViewer image = new ImageViewer();
@@ -91,6 +95,7 @@ public class allProduit {
           SpanLabel carac = new SpanLabel("Caracteristique: "+e.getCaracteristiques());
           SpanLabel desc = new SpanLabel("Description: "+e.getDescription());
           Button rating = new Button("Rating");
+          Button    btncart=new Button("ajout au panier");
             rating.addActionListener(new ActionListener() {
                    @Override
                    public void actionPerformed(ActionEvent evt) {
@@ -98,6 +103,31 @@ public class allProduit {
                   showForm();
                    }
                });
+            btncart.addActionListener(new ActionListener() {
+                   @Override
+                   public void actionPerformed(ActionEvent evt) {
+                       ArrayList<Object> nb_pdt = new ArrayList<>();
+                       nb_pdt.add(0,e);
+                       System.out.println(nb_pdt);
+                       nb_pdt.add(1, 1);
+                       Gui.Login.panier.add(nb_pdt);
+                       System.out.println(Gui.Login.panier);
+                       
+                       
+                   }
+               });
+               
+               
+               
+               f2.getToolbar().addCommandToSideMenu("back",null,d->{f.showBack();});
+               f2.getToolbar().addCommandToSideMenu("voir panier",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Panier panpage = new Panier();
+                 panpage.getF().show();
+             }
+         });
+               
                
                SS.add(img);
                SS.add(labelll);
@@ -105,8 +135,12 @@ public class allProduit {
                SS.add(desc);
                SS.add(prix);
                SS.add(rating);
-               f.add(SS);
-               f.show();
+               SS.add(btncart);
+               f2.add(SS);
+               
+               f2.show();
+                             
+
                        
            }
        });
@@ -121,9 +155,15 @@ public class allProduit {
           event.addAll(c);
           
       }
+      f.getToolbar().addCommandToSideMenu("voir panier",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Panier panpage = new Panier();
+                 panpage.getF().show();
+             }
+         });
       
       f.add(event);
-         
     }
 
     public Form getF() {

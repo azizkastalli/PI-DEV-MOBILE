@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package Gui;
 
 import Entite.Produit;
 import Entite.User;
@@ -14,6 +14,8 @@ import com.codename1.ui.Container;
 import com.codename1.ui.Form;
 import com.codename1.ui.TextField;
 import com.codename1.ui.layouts.BoxLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,27 +23,28 @@ import com.codename1.ui.layouts.BoxLayout;
  */
 public class Login {
         private Container label;
-        Form f2;
-        
-        TextField tetat;
+        Form f;
+        public static List<ArrayList> panier = new ArrayList<>();
+        public static User loggduser = new User();
+        TextField tetat= new TextField("","Login");
+        TextField pass = new TextField("", "Password", 20, TextField.PASSWORD);
+       
         Button btnreg,btnaff;
 
     public Login() {
         
         
         label = new Container(new BoxLayout(BoxLayout.Y_AXIS)) ;
-       TextField labell = new TextField("","Login");
-       TextField caracteristique = new TextField("","Mot de pase");
        
         
-        f2 = new Form("home");
+        f = new Form("home");
         btnaff=new Button("Login");
         btnreg=new Button("Register");
-        label.add(labell);
-        label.add(caracteristique);
-        f2.add(label);
-        f2.add(btnreg);
-        f2.add(btnaff);
+        label.add(tetat);
+        label.add(pass);
+        f.add(label);
+        f.add(btnreg);
+        f.add(btnaff);
        
         btnreg.addActionListener((e) -> {
            
@@ -51,24 +54,30 @@ public class Login {
         
         btnaff.addActionListener((e)->{
             ServiceUser seru = new ServiceUser();
-            User loggduser = new User();
-            loggduser.setUsername(labell.getText());
+            
+            loggduser.setUsername(tetat.getText());
             loggduser=seru.get(loggduser);
-            if(loggduser.getPassword().equals(caracteristique.getText()))
+            if(loggduser.getPassword().equals(pass.getText()))
             {
                 System.out.println("login");
-                System.out.println(loggduser.getRoles());}
+                System.out.println(loggduser.getId());
+                allProduit EM = new allProduit();
+                EM.getF().show();
+                
             
+            }
+                
             else{System.out.println("no login");}
+            
         });
     }
 
     public Form getF() {
-        return f2;
+        return f;
     }
 
     public void setF(Form f) {
-        this.f2 = f;
+        this.f = f;
     }
 
    

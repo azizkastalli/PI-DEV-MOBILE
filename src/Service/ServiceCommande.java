@@ -5,6 +5,7 @@
  */
 package Service;
 
+import Entite.Commande;
 import Entite.User;
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
@@ -18,40 +19,40 @@ import java.util.List;
 import java.util.Map;
 /**
  *
- * @author azizkastalli
+ * @author USER
  */
-public class ServiceUser implements IntService<User> {
-
+public class ServiceCommande implements IntService<Commande> {
+private int idf;
     @Override
-    public void Create(User obj) {
+    public void Create(Commande obj) {
 
          ConnectionRequest con = new ConnectionRequest();
-       /*String Url = "http://localhost/pidev3.0/web/app_dev.php/new"+"/"+obj.getCaracteristiques()+"/"+obj.getDescription()+"/"+obj.getEtat()+"/"+obj.getNom_image()+"/"+obj.getId_categorie()+"/"+obj.getId_propietaire()+"/"+obj.getLabel()+"/"+obj.getPoid()+"/"+obj.getPrix_ancien()+"/"+obj.getVote()+"/"+obj.getPrix_nouv()+"/"+obj.getQuantite();
+        String Url = "http://localhost/pidev3.0/web/app_dev.php/newc"+"/"+obj.getEtat()+"/"+obj.getId_client()+"/"+obj.getPrix_tot();
         System.out.println(Url);
         con.setUrl(Url);
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
             System.out.println(str);
           
-        });*/
+        });
         NetworkManager.getInstance().addToQueueAndWait(con);
 
     }
 
     @Override
-    public void Delete(User obj) {
+    public void Delete(Commande obj) {
      //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void Update(User obj) {
+    public void Update(Commande obj) {
       //To change body of generated methods, choose Tools | Templates.
     }
 
  @Override
-    public ArrayList<User> getAll() {
+    public ArrayList<Commande> getAll() {
        
-        ArrayList<User> listTasks = new ArrayList<>();
+        ArrayList<Commande> listTasks = new ArrayList<>();
         ConnectionRequest con = new ConnectionRequest();
         con.setUrl("http://localhost/pidev3.0/web/app_dev.php/all");
         con.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -64,7 +65,7 @@ public class ServiceUser implements IntService<User> {
                     System.out.println(tasks);
                     List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
                     for (Map<String, Object> obj : list) {
-                        User prod = new User();
+                        Commande prod = new Commande();
                         
                         float poi = Float.parseFloat(obj.get("poid").toString());
                        
@@ -88,9 +89,9 @@ public class ServiceUser implements IntService<User> {
     }
 
     @Override
-    public User get(User obj) {
+    public Commande get(Commande obj) {
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/finus/"+obj.getUsername());
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/fincom/"+obj.getId_client());
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -102,20 +103,20 @@ public class ServiceUser implements IntService<User> {
                     Map<String, Object> obje;
                     obje = (Map<String, Object>) tasks;
                     
-                        User prod = new User();
+                        Commande prod = new Commande();
                         
                        List<String> poi = (List<String>) obje.get("roles");
                         System.out.println(obje);
-                        float id = Float.parseFloat(obje.get("id").toString());
-                        prod.setEmail(obje.get("email").toString());
-                        prod.setPassword(obje.get("password").toString());
-                        prod.setRoles(obje.get("roles").toString());
-                        prod.setId((int) id);
+                        float etat = Float.parseFloat(obje.get("etat").toString());
+                        prod.setEtat((int) etat);
+                        float Id_client = Float.parseFloat(obje.get("id_client").toString());
+                        prod.setId_client((int) Id_client);
+                        float Prix_tot = Float.parseFloat(obje.get("prix_tot").toString());
+                        prod.setPrix_tot(Prix_tot);
                         
-                        obj.setEmail(prod.getEmail());
-                        obj.setPassword(prod.getPassword());
-                        obj.setRoles(poi.get(0));
-                        obj.setId(prod.getId());
+                        obj.setId_client(prod.getId_client());
+                        obj.setPrix_tot(prod.getPrix_tot());
+                        obj.setEtat(prod.getEtat());
                        
                        
                         
@@ -134,5 +135,45 @@ public class ServiceUser implements IntService<User> {
         //To change body of generated methods, choose Tools | Templates.
     }
 
+    public int getlid(int idc) {
+       
+    ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/fincoml/"+idc);
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                JSONParser jsonp = new JSONParser();
+                int prod = 0;
+                try {
+                    Map<String, Object> tasks = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
+                    System.out.println(tasks);
+                    Map<String, Object> obje;
+                    obje = (Map<String, Object>) tasks;
+                    
+                        
+                        
+                      
+                        float id = Float.parseFloat(obje.get("id").toString());
+                        prod = (int) id;
+                        
+                       
+                       
+                        
+                        
+                    
+                    
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                    
+                }
+                idf=prod;
+
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        
+        
+        return idf;
+    }
   
 }

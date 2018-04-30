@@ -67,11 +67,13 @@ public class ServiceProduit implements IntService<Produit> {
                         Produit prod = new Produit();
                         
                         float poi = Float.parseFloat(obj.get("poid").toString());
+                        float id = Float.parseFloat(obj.get("id").toString());
                        
                         prod.setCaracteristiques(obj.get("caracteristiques").toString());
                         prod.setDescription(obj.get("description").toString());
                         prod.setId_categorie(obj.get("idCategorie").toString());
                         prod.setPoid(poi);
+                        prod.setId((int) id);
                         
                         
                        
