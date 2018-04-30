@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package Gui;
 
 import Entite.Produit;
+import Entite.Vote;
 import Service.ServiceProduit;
+import Service.ServiceVote;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SliderBridge;
@@ -17,6 +19,7 @@ import com.codename1.notifications.LocalNotification;
 import com.codename1.ui.Button;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Font;
@@ -43,9 +46,9 @@ import java.util.ArrayList;
  * @author HP 
  */
 public class allProduit {
-    private Form fo;
+    private Form fo,f;
     private Container event;
-       
+    private  Resources theme;
 
     public allProduit()  {
          fo = new Form("Les Produits ", new BoxLayout(BoxLayout.Y_AXIS));
@@ -53,7 +56,13 @@ public class allProduit {
          ServiceProduit SE=new ServiceProduit();
          ArrayList<Produit> listeEvent = SE.getAll();
          System.out.println("listaa : "+listeEvent);
-       
+      fo.getToolbar().addCommandToSideMenu("Ajout Produits",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent evt) {
+                 Gui.HomeForm HF = new HomeForm();
+                 HF.getF().show();
+             }
+         });
          for(Produit e : listeEvent)
       {
           //bloc de creation d'image
@@ -71,8 +80,15 @@ public class allProduit {
               btndetail.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent evt) {
-               Form f = new Form("Detais Produit", new BoxLayout(BoxLayout.Y_AXIS));
-            
+               f = new Form("Produit: "+e.getLabel(), new BoxLayout(BoxLayout.Y_AXIS));
+                f.getToolbar().addCommandToSideMenu("Retour aux Produits",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent evt) {
+                 allProduit al = new allProduit();
+                 al.getF().show();
+             }
+         });
+        
                     Container SS = new Container(new BoxLayout(BoxLayout.Y_AXIS)) ;
 
            ImageViewer image = new ImageViewer();
@@ -82,28 +98,72 @@ public class allProduit {
         
           Image img=URLImage.createToStorage(encImage,e.getLabel(),"http://localhost/pidev3.0/web/images/"+e.getNom_image(), URLImage.RESIZE_SCALE);
     image.setImage(img);
-          
+          ServiceVote SV = new ServiceVote();
           SpanLabel labelll = new SpanLabel("Nom Produit: "+e.getLabel());
           String pri = Double.toString(e.getPrix_nouv());
           SpanLabel prix = new SpanLabel("Prix: "+pri);
           SpanLabel carac = new SpanLabel("Caracteristique: "+e.getCaracteristiques());
           SpanLabel desc = new SpanLabel("Description: "+e.getDescription());
-          Button rating = new Button("Rating");
-            rating.addActionListener(new ActionListener() {
-                   @Override
-                   public void actionPerformed(ActionEvent evt) {
-                                    
-                  showForm();
-                   }
-               });
+          SpanLabel vott= new SpanLabel("Vote :"+SV.getAllvot(e.getLabel()));
+          
+          /*rate*/
+             Label ll=new Label();    
+  Button bvalide = new Button("Valider vote");
+     Slider starRank = new Slider();
+    starRank.setEditable(true);
+    starRank.setMinValue(0);
+    starRank.setMaxValue(5);
+    Font fnt = Font.createTrueTypeFont("native:MainThin", "native:ItalicLight").
+            derive(Display.getInstance().convertToPixels(5, true), Font.STYLE_PLAIN);
+    Style s = new Style(0xffff33, 0, fnt, (byte)0);
+    Image fullStar = FontImage.createMaterial(FontImage.MATERIAL_STAR, s).toImage();
+    s.setOpacity(100);
+    s.setFgColor(0);
+    Image emptyStar = FontImage.createMaterial(FontImage.MATERIAL_STAR, s).toImage();
+    initStarRankStyle(starRank.getSliderEmptySelectedStyle(), emptyStar);
+    initStarRankStyle(starRank.getSliderEmptyUnselectedStyle(), emptyStar);
+    initStarRankStyle(starRank.getSliderFullSelectedStyle(), fullStar);
+    initStarRankStyle(starRank.getSliderFullUnselectedStyle(), fullStar);
+    starRank.setPreferredSize(new Dimension(fullStar.getWidth() * 5, fullStar.getHeight()));
+    starRank.addDataChangedListener(new DataChangedListener() {
+        
+        @Override
+        public void dataChanged(int type, int index) {
+            
+            System.out.println("rank :"+starRank.getProgress());
+            ll.setText("Vote :"+starRank.getProgress());
+           
+        }
+    });
+      bvalide.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+
+            ServiceVote SV= new ServiceVote();
+            Vote v = new Vote(e.getLabel(),starRank.getProgress(), 0);
+            SV.Create(v);
+            Dialog.show("Rate", "Votre vote a été ajouter avec succes", "OK", null);
+           
+            
+            fo.showBack();
+            
+        }
+    });
+   
+  
+  
+  
                
                SS.add(img);
                SS.add(labelll);
                SS.add(carac);
                SS.add(desc);
                SS.add(prix);
-               SS.add(rating);
+               SS.add(vott);
                f.add(SS);
+               f.add(FlowLayout.encloseCenter(starRank));
+               f.add(ll);
+               f.add(bvalide);
                f.show();
                        
            }
@@ -131,39 +191,7 @@ public class allProduit {
     public void setF(Form f) {
         this.fo = f;
     }
-    public void showForm() {
-    Label ll=new Label();    
-  Form hi = new Form("Star rating vote", new BoxLayout(BoxLayout.Y_AXIS));
-     Slider starRank = new Slider();
-    starRank.setEditable(true);
-    starRank.setMinValue(0);
-    starRank.setMaxValue(5);
-    Font fnt = Font.createTrueTypeFont("native:MainThin", "native:ItalicLight").
-            derive(Display.getInstance().convertToPixels(5, true), Font.STYLE_PLAIN);
-    Style s = new Style(0xffff33, 0, fnt, (byte)0);
-    Image fullStar = FontImage.createMaterial(FontImage.MATERIAL_STAR, s).toImage();
-    s.setOpacity(100);
-    s.setFgColor(0);
-    Image emptyStar = FontImage.createMaterial(FontImage.MATERIAL_STAR, s).toImage();
-    initStarRankStyle(starRank.getSliderEmptySelectedStyle(), emptyStar);
-    initStarRankStyle(starRank.getSliderEmptyUnselectedStyle(), emptyStar);
-    initStarRankStyle(starRank.getSliderFullSelectedStyle(), fullStar);
-    initStarRankStyle(starRank.getSliderFullUnselectedStyle(), fullStar);
-    starRank.setPreferredSize(new Dimension(fullStar.getWidth() * 5, fullStar.getHeight()));
-    starRank.addDataChangedListener(new DataChangedListener() {
-        
-        @Override
-        public void dataChanged(int type, int index) {
-            
-            System.out.println("rank :"+starRank.getProgress());
-            ll.setText("Vote :"+starRank.getProgress());
-        }
-    });
   
-  hi.add(FlowLayout.encloseCenter(starRank));
-  hi.add(ll);
-  hi.show();
-}
 
 private void initStarRankStyle(Style s, Image star) {
     s.setBackgroundType(Style.BACKGROUND_IMAGE_TILE_BOTH);

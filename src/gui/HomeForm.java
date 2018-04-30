@@ -3,14 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package Gui;
 
 import Entite.Produit;
 import Service.ServiceProduit;
+import com.codename1.components.MultiButton;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
+import com.codename1.ui.Display;
+import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
+import com.codename1.ui.Image;
 import com.codename1.ui.TextField;
+import com.codename1.ui.URLImage;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 
 /**
@@ -26,8 +34,34 @@ public class HomeForm {
 
     public HomeForm() {
 
-     
+        String[] characters = { "Chien", "Chat", "Nourriture"};
+        
+        int size = Display.getInstance().convertToPixels(7);
+    EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(size, size, 0xffcccccc), true);
+    Image[] pictures = {
+    URLImage.createToStorage(placeholder, "Chien","http://localhost/pidev3.0/web/images/news-img-02.jpg"),
+    URLImage.createToStorage(placeholder, "Chat","http://localhost/pidev3.0/web/images/instagram-img-06.jpg"),
+    URLImage.createToStorage(placeholder, "Nourriture","http://localhost/pidev3.0/web/images/cart-img-03.jpg")
+};
 
+    MultiButton b = new MultiButton("Choisit une catégorie...");
+b.addActionListener(e -> {
+    Dialog d = new Dialog();
+    d.setLayout(BoxLayout.y());
+    d.getContentPane().setScrollableY(true);
+    for(int iter = 0 ; iter < characters.length ; iter++) {
+        MultiButton mb = new MultiButton(characters[iter]);
+        mb.setIcon(pictures[iter]);
+        d.add(mb);
+        mb.addActionListener(ee -> {
+            b.setTextLine1(mb.getTextLine1());
+            b.setIcon(mb.getIcon());
+            d.dispose();
+            b.revalidate();
+        });
+    }
+    d.showPopupDialog(b);
+});
 
         label = new Container(new BoxLayout(BoxLayout.Y_AXIS)) ;
        TextField labell = new TextField("","Nom Produit");
@@ -40,19 +74,19 @@ public class HomeForm {
        TextField quantite = new TextField("","quantite");
         
         f2 = new Form("Formulaire", new BoxLayout(BoxLayout.Y_AXIS));
-        btnaff=new Button("Affichage");
+        
         btnajt=new Button("Ajouter");
         label.add(labell);
         label.add(caracteristique);
         label.add(description);
         label.add(prix);
-        label.add(categorie);
         label.add(image);
         label.add(poid);
         label.add(quantite);
+        label.add(b);
         f2.add(label);
         f2.add(btnajt);
-        f2.add(btnaff);
+      
        
         btnajt.addActionListener((e) -> {
             ServiceProduit ser = new ServiceProduit();
@@ -60,16 +94,20 @@ public class HomeForm {
             double poi = Double.parseDouble(poid.getText());
             int quant = Integer.parseInt(quantite.getText());
             
-            Produit t = new Produit(caracteristique.getText(),description.getText(),"confirmer",categorie.getText(),0,image.getText(),poi,0,pri,quant,0,labell.getText());
+            Produit t = new Produit(caracteristique.getText(),description.getText(),"confirmer",b.getTextLine1(),0,image.getText(),poi,0,pri,quant,0,labell.getText());
             ser.Create(t);
-            
-
+             Dialog.show("Ajout du Produit", "Votre Produit a été ajouter avec succes", "OK", null);
+             allProduit al = new allProduit();
+             al.getF().show();
         });
         
-        btnaff.addActionListener((e)->{
-        allProduit a=new allProduit();
-        a.getF().show();
-        });
+             f2.getToolbar().addCommandToSideMenu("Les Produits",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent evt) {
+                 allProduit al = new allProduit();
+                 al.getF().show();
+             }
+         });
     }
 
     public Form getF() {
