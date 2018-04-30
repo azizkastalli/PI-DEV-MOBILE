@@ -7,25 +7,41 @@ package Gui;
 
 import Entite.Produit;
 import Service.ServiceProduit;
+import com.codename1.capture.Capture;
 import com.codename1.components.MultiButton;
+import com.codename1.io.File;
+import com.codename1.io.FileSystemStorage;
+import com.codename1.io.Log;
+import com.codename1.io.Storage;
+import com.codename1.io.Util;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
+import com.codename1.ui.Graphics;
 import com.codename1.ui.Image;
+import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
+import com.codename1.ui.Toolbar;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.plaf.Style;
+import com.codename1.ui.plaf.UIManager;
+import java.io.IOException;
+
 
 /**
  *
  * @author HP
  */
 public class HomeForm {
+TextField image = new TextField("","lien de l'image..");       
         private Container label;
         Form f2;
         
@@ -63,13 +79,42 @@ b.addActionListener(e -> {
     d.showPopupDialog(b);
 });
 
+
+        Button imag = new Button("upload image");
+        imag.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+           String i = Capture.capturePhoto();
+                
+            if (i!= null)
+            {
+               try {
+                   Image im = Image.createImage(i); 
+             
+                   
+                   image.setText(i.substring(38));
+                   
+               } catch (IOException ex) {
+                    ex.printStackTrace();
+               }
+            }
+                }
+        });
+
+        
+        
+        
+        
+        
+
+
         label = new Container(new BoxLayout(BoxLayout.Y_AXIS)) ;
        TextField labell = new TextField("","Nom Produit");
        TextField caracteristique = new TextField("","caracteristique");
        TextField description = new TextField("","description");
        TextField prix = new TextField("","prix");
-       TextField categorie = new TextField("","categorie");
-       TextField image = new TextField("","image");
+       
+       
        TextField poid = new TextField("","poid");
        TextField quantite = new TextField("","quantite");
         
@@ -80,6 +125,7 @@ b.addActionListener(e -> {
         label.add(caracteristique);
         label.add(description);
         label.add(prix);
+        label.add(imag);
         label.add(image);
         label.add(poid);
         label.add(quantite);
