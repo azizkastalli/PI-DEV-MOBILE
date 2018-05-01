@@ -225,7 +225,15 @@ public class AllEncheres {
           participer.addActionListener((evt) -> {
                 Participantsencheres participant = new Participantsencheres();
                 ServiceParticipantEncheres Serviceparticipants = new ServiceParticipantEncheres();
-               if( participer.isValue() )            
+                boolean add= true; 
+                
+                          for(Integer id : IdEncheres )
+                          {
+                             if(e.getId_encheres()==id)
+                                           add=false; 
+                                   }
+                
+               if( participer.isValue() && add==true )            
                {
                  String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(e.getDate_debut());
                  participant.setDebut_session(date);
@@ -235,9 +243,7 @@ public class AllEncheres {
                  Serviceparticipants.Create(participant);  
                  IdEncheres.add(e.getId_encheres());
                }
-               else 
-               {
-                  if (Dialog.show("Confirmer", "Voulez vous vraiment ne plus participer à cette encheres ?", "Oui", "Non") ) 
+               else if (participer.isValue()==false && Dialog.show("Confirmer", "Voulez vous vraiment ne plus participer à cette encheres ?", "Oui", "Non") ) 
                    {
                  participant.setId_session(e.getId_encheres());
                  participant.setId_user(1);
@@ -250,13 +256,13 @@ public class AllEncheres {
                            else
                            count++;
                     }
-                 IdEncheres.remove(count);
+                         IdEncheres.remove(count);
                    }
                   else
                   {
                      participer.setValue(true);
                    }
-                }
+                
               
           });
           
