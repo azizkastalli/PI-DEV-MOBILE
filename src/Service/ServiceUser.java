@@ -26,14 +26,14 @@ public class ServiceUser implements IntService<User> {
     public void Create(User obj) {
 
          ConnectionRequest con = new ConnectionRequest();
-       /*String Url = "http://localhost/pidev3.0/web/app_dev.php/new"+"/"+obj.getCaracteristiques()+"/"+obj.getDescription()+"/"+obj.getEtat()+"/"+obj.getNom_image()+"/"+obj.getId_categorie()+"/"+obj.getId_propietaire()+"/"+obj.getLabel()+"/"+obj.getPoid()+"/"+obj.getPrix_ancien()+"/"+obj.getVote()+"/"+obj.getPrix_nouv()+"/"+obj.getQuantite();
+       String Url = "http://localhost/pidev3.0/web/app_dev.php/newus"+"/"+obj.getUsername()+"/"+obj.getEmail()+"/"+obj.getPassword()+"/"+obj.getRoles()+"/"+obj.getNom()+"/"+obj.getPrenom()+"/"+obj.getNum_tel();
         System.out.println(Url);
         con.setUrl(Url);
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
             System.out.println(str);
           
-        });*/
+        });
         NetworkManager.getInstance().addToQueueAndWait(con);
 
     }
