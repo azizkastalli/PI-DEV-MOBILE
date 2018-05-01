@@ -19,6 +19,7 @@ public class AnimalPerdu {
     private Date date_disparition;
     private String lieu_disparition; 
     private String etat1;
+    private String DateD;
   
 
    
@@ -35,6 +36,15 @@ public class AnimalPerdu {
         this.date_disparition = date_disparition;
         this.lieu_disparition = lieu_disparition;
     }
+
+    public AnimalPerdu(int id_animal, String DateD,String lieu_disparition) {
+        this.id_animal = id_animal;
+        this.DateD = DateD;
+        this.lieu_disparition = lieu_disparition;
+        
+    }
+
+   
 
     public AnimalPerdu(int id, int id_animal, Date date_disparition, String lieu_disparition, String etat1) {
         this.id = id;
@@ -132,6 +142,14 @@ public class AnimalPerdu {
 
     public void setEtat1(String etat1) {
         this.etat1 = etat1;
+    }
+
+    public String getDateD() {
+        return DateD;
+    }
+
+    public void setDateD(String DateD) {
+        this.DateD = DateD;
     }
 
    

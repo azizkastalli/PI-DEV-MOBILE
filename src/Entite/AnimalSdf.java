@@ -20,6 +20,8 @@ public class AnimalSdf {
     private String lieu_trouvaille;
     private int id_client;
     private int id_categorie;
+    private String DateD;
+     private int etat;
     
         public AnimalSdf(){}
 
@@ -33,6 +35,19 @@ public class AnimalSdf {
         this.id_categorie=id_categorie;
      
     }
+
+    public AnimalSdf(String sexe, String lieu_trouvaille, String DateD) {
+        this.sexe = sexe;
+        this.lieu_trouvaille = lieu_trouvaille;
+        this.DateD = DateD;
+    }
+
+    public AnimalSdf(String sexe, Date date_trouvaille, String lieu_trouvaille) {
+        this.sexe = sexe;
+        this.date_trouvaille = date_trouvaille;
+        this.lieu_trouvaille = lieu_trouvaille;
+    }
+        
     
         public AnimalSdf(String sexe, String nom_image, Date date_trouvaille, String lieu_trouvaille, int id_client,int id_categorie) {
         
@@ -122,6 +137,22 @@ public class AnimalSdf {
     @Override
     public String toString() {
         return "AnimalSdf{"  + ", sexe=" + sexe + ", date_trouvaille=" + date_trouvaille + ", lieu_trouvaille=" + lieu_trouvaille + ", id_client=" + id_client + ", nom_image=" + nom_image + '}';
+    }
+
+    public String getDateD() {
+        return DateD;
+    }
+
+    public void setDateD(String DateD) {
+        this.DateD = DateD;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
     }
 
    
