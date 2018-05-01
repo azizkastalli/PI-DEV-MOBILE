@@ -15,6 +15,7 @@ import java.io.IOException;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
 import Gui.EspaceMagasin;
+import Gui.EspaceService;
 
 
 
@@ -58,8 +59,8 @@ public class ZanimauxApp {
         }
         
         
-         EspaceMagasin EM = new EspaceMagasin();
-         EM.getF().show();
+         EspaceService ES = new EspaceService();
+         ES.getF().show();
      /*       
         try {
             AllEncheres encheres = new AllEncheres();
