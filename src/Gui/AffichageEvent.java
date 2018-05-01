@@ -78,7 +78,7 @@ public class AffichageEvent {
           SpanLabel label = new SpanLabel(e.getNom());
           
              Button Details = new Button("Details");
-          
+                 Button Reserver = new Button("Reserver");
                
            Container c =new Container(new BoxLayout(BoxLayout.Y_AXIS));
                     Container c1 =new Container(new BoxLayout(BoxLayout.X_AXIS));

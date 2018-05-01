@@ -14,6 +14,7 @@ import com.codename1.ui.layouts.BoxLayout;
 import java.io.IOException;
 
 
+
 /**
  *
  * @author azizkastalli
@@ -60,12 +61,10 @@ public class EspaceMagasin {
         
         encheres.addActionListener(
         (evt) -> {
-                 try {
-           AffichageEvent ae = new AffichageEvent();
+            ModifSuppEvent ae;
+            ae = new ModifSuppEvent();
             ae.getF().show();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
+           
         }
         );
     }

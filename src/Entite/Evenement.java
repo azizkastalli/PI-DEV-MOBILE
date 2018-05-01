@@ -28,6 +28,7 @@ public class Evenement {
    private int id_association;
    private int id_categorie;
    private String StringdateD;
+   private String StringdateF;
    
     public Evenement(){}
 
@@ -72,11 +73,21 @@ public class Evenement {
 
   
 
-    public Evenement(String nom, String description, int nbr_participants, String StringdateD) {
+    public Evenement(String nom, String description, int nbr_participants, String StringdateD,String StringdateF, String nom_image ) {
         this.nom = nom;
         this.description = description;
         this.nbr_participants = nbr_participants;
         this.StringdateD = StringdateD;
+        this.StringdateF=StringdateF;
+        this.nom_image=nom_image;
+    }
+
+    public Evenement(int id, String nom, String description, int nbr_participants, String nom_image) {
+        this.id = id;
+        this.nom = nom;
+        this.description = description;
+        this.nbr_participants = nbr_participants;
+        this.nom_image = nom_image;
     }
 
       
@@ -168,6 +179,14 @@ public class Evenement {
 
     public void setId_association(int id_association) {
         this.id_association = id_association;
+    }
+
+    public String getStringdateF() {
+        return StringdateF;
+    }
+
+    public void setStringdateF(String StringdateF) {
+        this.StringdateF = StringdateF;
     }
 
     public void setId_categorie(int id_categorie) {
