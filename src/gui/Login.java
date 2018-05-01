@@ -13,6 +13,7 @@ import com.codename1.components.ImageViewer;
 import com.codename1.components.SpanLabel;
 import com.codename1.messaging.Message;
 import com.codename1.ui.Button;
+import com.codename1.ui.ComboBox;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
@@ -40,6 +41,7 @@ public class Login {
         TextField pass = new TextField("", "Password", 20, TextField.PASSWORD);
        
         Button btnreg,btnaff;
+          String tetat33= "";
 
     public Login() {
         
@@ -66,12 +68,27 @@ public class Login {
                     Container SS = new Container(new BoxLayout(BoxLayout.Y_AXIS)) ;
                 TextField tetat1= new TextField("","Username");
                 TextField tetat2= new TextField("","Email");
-                TextField tetat3= new TextField("","Role");
+              
+                ComboBox  tetat3=new ComboBox();
+                tetat3.addItem("");
+                tetat3.addItem("CLIENT");
+                tetat3.addItem("ASSOCIATION");
+                tetat3.addItem("LIVREUR");
+                tetat3.addItem("MAGASIN");
+                tetat3.addItem("VETERINAIRE");
+                tetat3.addItem("DRESSEUR");
                 TextField tetat4= new TextField("","Nom");
                 TextField tetat5= new TextField("","Prenom");
                 TextField tetat6= new TextField("","Num_tel");
         TextField pass2 = new TextField("", "Password", 20, TextField.PASSWORD);
-           
+                tetat3.addActionListener(new ActionListener() {
+                           @Override
+                           public void actionPerformed(ActionEvent evt) {
+                               tetat33= "ROLE_"+ tetat3.getSelectedItem();
+                               System.out.println(tetat3.getSelectedItem());
+                               
+                           }
+                       });
           
           Button rating = new Button("Registrer");
           Button    btncart=new Button("retour au login");
@@ -90,7 +107,9 @@ public class Login {
                        User crus = new User();
                        crus.setEmail(tetat2.getText());
                        crus.setUsername(tetat1.getText());
-                       crus.setRoles("ROLE_"+tetat3.getText());
+                       crus.setRoles(tetat33);
+                       
+                       
                        crus.setNom(tetat4.getText());
                        crus.setPrenom(tetat5.getText());
                        crus.setNum_tel(tetat6.getText());
@@ -125,8 +144,13 @@ public class Login {
             {
                 System.out.println("login");
                 System.out.println(loggduser.getId());
+                if(loggduser.getRoles().equals("ROLE_CLIENT")){
                 allProduit EM = new allProduit();
+                EM.getF().show();}
+                else if(loggduser.getRoles().equals("ROLE_LIVREUR")){
+                Leslivraisons EM = new Leslivraisons();
                 EM.getF().show();
+                }
                 
             
             }
