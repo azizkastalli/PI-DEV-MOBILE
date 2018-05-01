@@ -114,6 +114,13 @@ public class Panier {
                  panpage.getF().show();
              }
          });
+         f.getToolbar().addCommandToSideMenu("mes commandes",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Mescommandes commpage = new Mescommandes();
+                 commpage.getF().show();
+             }
+         });
          f.getToolbar().addCommandToSideMenu("vider panier",null, new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent d) {

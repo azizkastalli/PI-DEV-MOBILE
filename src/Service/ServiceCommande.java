@@ -101,11 +101,13 @@ private int idf;
                     Map<String, Object> tasks = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
                     System.out.println(tasks);
                     Map<String, Object> obje;
+                    List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
+                    for (Map<String, Object> obj : list) {}
                     obje = (Map<String, Object>) tasks;
                     
                         Commande prod = new Commande();
                         
-                       List<String> poi = (List<String>) obje.get("roles");
+                       
                         System.out.println(obje);
                         float etat = Float.parseFloat(obje.get("etat").toString());
                         prod.setEtat((int) etat);
@@ -113,10 +115,13 @@ private int idf;
                         prod.setId_client((int) Id_client);
                         float Prix_tot = Float.parseFloat(obje.get("prix_tot").toString());
                         prod.setPrix_tot(Prix_tot);
+                        float id=Float.parseFloat(obje.get("id").toString());
+                        prod.setId((int) id);
                         
                         obj.setId_client(prod.getId_client());
                         obj.setPrix_tot(prod.getPrix_tot());
                         obj.setEtat(prod.getEtat());
+                        obj.setId(prod.getId());
                        
                        
                         
@@ -174,6 +179,52 @@ private int idf;
         
         
         return idf;
+    }
+    public ArrayList<Commande> getc(Commande obj) {
+        
+        ArrayList<Commande> listTasks = new ArrayList<>();
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/fincom/"+obj.getId_client());
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                JSONParser jsonp = new JSONParser();
+                
+                try {
+                    Map<String, Object> tasks = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
+                    System.out.println(tasks);
+                    Map<String, Object> obje;
+                    List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
+                    for (Map<String, Object> objec : list) {
+                    Commande prod = new Commande();
+                        System.out.println(objec);
+                    float etat = Float.parseFloat(objec.get("etat").toString());
+                        prod.setEtat((int) etat);
+                        
+                        float Prix_tot = Float.parseFloat(objec.get("prixTot").toString());
+                        prod.setPrix_tot(Prix_tot);
+                        float id=Float.parseFloat(objec.get("id").toString());
+                        prod.setId((int) id);
+                        
+                        listTasks.add(prod);
+                    }
+                    
+                       
+                       
+                        
+                        
+                    
+                    
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        
+        return listTasks;
+        //To change body of generated methods, choose Tools | Templates.
     }
   
 }

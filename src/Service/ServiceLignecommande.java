@@ -139,6 +139,51 @@ public class ServiceLignecommande implements IntService<Lignecommande> {
         return obj;
         //To change body of generated methods, choose Tools | Templates.
     }
+    public ArrayList<Lignecommande> getc(Commande obj) {
+        
+        ArrayList<Lignecommande> listTasks = new ArrayList<>();
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/finlincom/"+obj.getId());
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                JSONParser jsonp = new JSONParser();
+                
+                try {
+                    Map<String, Object> tasks = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
+                    System.out.println(tasks);
+                    List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
+                    for (Map<String, Object> objec : list) {
+                    Lignecommande prod = new Lignecommande();
+                    
+                        prod.setId_commande(obj.getId());
+                        float Id_client = Float.parseFloat(objec.get("idClient").toString());
+                        prod.setId_client((int) Id_client);
+                        float Id_produit = Float.parseFloat(objec.get("idProduit").toString());
+                        prod.setId_produit((int) Id_produit);
+                        float qte=Float.parseFloat(objec.get("qte").toString());
+                        prod.setQte((int) qte);
+                        
+                        listTasks.add(prod);
+                    }
+                    
+                       
+                       
+                        
+                        
+                    
+                    
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        
+        return listTasks;
+        //To change body of generated methods, choose Tools | Templates.
+    }
 
   
 }
