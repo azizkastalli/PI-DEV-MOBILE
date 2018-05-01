@@ -1,0 +1,22 @@
+{
+  "name": "heart",
+  "css_prefix_text": "icon-",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "0eabe5f8d71cc838484ff39436426d2d",
+      "css": "heart",
+      "code": 59392,
+      "src": "entypo"
+    },
+    {
+      "uid": "d18071bbf8f0a8cec8d1f556c91c6af0",
+      "css": "heart-empty",
+      "code": 59393,
+      "src": "entypo"
+    }
+  ]
+}

@@ -32,7 +32,6 @@ float s=0;
         con.setUrl(Url);
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
-            System.out.println(str);
           
         });
         NetworkManager.getInstance().addToQueueAndWait(con);    
@@ -60,7 +59,6 @@ float s=0;
                 
                 try {
                     Map<String, Object> tasks = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
-                    System.out.println(tasks);
                     List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
                     for (Map<String, Object> obj : list) {
                         Vote vvv = new Vote();
@@ -105,7 +103,6 @@ float s=0;
                 
                 try {
                     Map<String, Object> tasks = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
-                    System.out.println(tasks);
                     List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
                     for (Map<String, Object> obj : list) {
                       
@@ -129,5 +126,6 @@ float s=0;
         return s;
 
     }
+    
     
 }

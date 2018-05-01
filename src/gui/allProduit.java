@@ -5,8 +5,10 @@
  */
 package Gui;
 
+import Entite.Favoris;
 import Entite.Produit;
 import Entite.Vote;
+import Service.ServiceFavoris;
 import Service.ServiceProduit;
 import Service.ServiceVote;
 import com.codename1.components.ImageViewer;
@@ -49,13 +51,14 @@ public class allProduit {
     private Form fo,f;
     private Container event;
     private  Resources theme;
-
+ServiceFavoris fv = new ServiceFavoris();
     public allProduit()  {
          fo = new Form("Les Produits ", new BoxLayout(BoxLayout.Y_AXIS));
          event = new Container(new BoxLayout(BoxLayout.Y_AXIS)) ;
          ServiceProduit SE=new ServiceProduit();
          ArrayList<Produit> listeEvent = SE.getAll();
-         System.out.println("listaa : "+listeEvent);
+        ArrayList<Favoris> listeE = fv.getAll();
+         
       fo.getToolbar().addCommandToSideMenu("Ajout Produits",null, new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent evt) {
@@ -88,7 +91,43 @@ public class allProduit {
                  al.getF().show();
              }
          });
-        
+                    Button fav = new Button();
+                   
+                    if(fv.getAllvot(0, e.getLabel())==true)
+                    {
+                        fav.setText("Favorisé");
+                        fav.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent evt) {
+                                fv.Deletefav(e.getLabel());
+                       fav.setText("Défavorisé");
+                                Dialog.show("Favoris", "Votre Produit a été Défavorisé", "OK", null);
+                        fo.show();
+                        }
+                    });
+                    }
+                      else
+                    {
+                        fav.setText("Défavorisé");
+                fav.addActionListener(new ActionListener() {
+                   @Override
+                   public void actionPerformed(ActionEvent evt) {
+                       Favoris favo = new Favoris(0, e.getLabel());
+                       fv.Create(favo);
+                        fav.setText("Favorisé");
+                       Dialog.show("Favoris", "Votre Produit a été Favorisé", "OK", null);
+                        fo.show();
+                        
+                   }
+               });
+                    
+                    } 
+                   
+                    
+                    
+                    
+                    
+                    
                     Container SS = new Container(new BoxLayout(BoxLayout.Y_AXIS)) ;
 
            ImageViewer image = new ImageViewer();
@@ -130,7 +169,7 @@ public class allProduit {
         @Override
         public void dataChanged(int type, int index) {
             
-            System.out.println("rank :"+starRank.getProgress());
+         
             ll.setText("Vote :"+starRank.getProgress());
            
         }
@@ -161,6 +200,7 @@ public class allProduit {
                SS.add(prix);
                SS.add(vott);
                f.add(SS);
+               f.add(fav);
                f.add(FlowLayout.encloseCenter(starRank));
                f.add(ll);
                f.add(bvalide);

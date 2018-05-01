@@ -27,11 +27,9 @@ public class ServiceProduit implements IntService<Produit> {
 
          ConnectionRequest con = new ConnectionRequest();
         String Url = "http://localhost/pidev3.0/web/app_dev.php/new"+"/"+obj.getCaracteristiques()+"/"+obj.getDescription()+"/"+obj.getEtat()+"/"+obj.getNom_image()+"/"+obj.getId_categorie()+"/"+obj.getId_propietaire()+"/"+obj.getLabel()+"/"+obj.getPoid()+"/"+obj.getPrix_ancien()+"/"+obj.getVote()+"/"+obj.getPrix_nouv()+"/"+obj.getQuantite();
-        System.out.println(Url);
         con.setUrl(Url);
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
-            System.out.println(str);
           
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
@@ -61,7 +59,6 @@ public class ServiceProduit implements IntService<Produit> {
                 
                 try {
                     Map<String, Object> tasks = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
-                    System.out.println(tasks);
                     List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
                     for (Map<String, Object> obj : list) {
                         Produit prod = new Produit();
