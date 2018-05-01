@@ -11,9 +11,11 @@ import Service.ServiceProduit;
 import Service.ServiceUser;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.SpanLabel;
+import com.codename1.messaging.Message;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
@@ -48,11 +50,13 @@ public class Login {
         f = new Form("home");
         btnaff=new Button("Login");
         btnreg=new Button("Register");
+        Button btnpassoub=new Button("mot de passe oublié");
         label.add(tetat);
         label.add(pass);
         f.add(label);
         f.add(btnreg);
         f.add(btnaff);
+        f.add(btnpassoub);
        
         btnreg.addActionListener(new ActionListener() {
             @Override
@@ -129,6 +133,17 @@ public class Login {
                 
             else{System.out.println("no login");}
             
+        });
+        btnpassoub.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                ServiceUser seru3 = new ServiceUser();
+            
+            loggduser.setUsername(tetat.getText());
+            loggduser=seru3.get(loggduser);
+            Message m = new Message("le mot de passe pour l'utilisateur "+loggduser.getUsername()+" est : "+loggduser.getPassword());
+            Display.getInstance().sendMessage(new String[] {loggduser.getEmail()}, "recuperation de mot de passe", m);
+            }
         });
     }
 
