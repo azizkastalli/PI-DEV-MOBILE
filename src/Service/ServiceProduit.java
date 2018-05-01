@@ -5,6 +5,7 @@
  */
 package Service;
 
+import Entite.Lignecommande;
 import Entite.Produit;
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
@@ -21,7 +22,7 @@ import java.util.Map;
  * @author azizkastalli
  */
 public class ServiceProduit implements IntService<Produit> {
-
+ Produit ligne = new Produit();
     @Override
     public void Create(Produit obj) {
 
@@ -64,7 +65,8 @@ public class ServiceProduit implements IntService<Produit> {
                         Produit prod = new Produit();
                         
                         float poi = Float.parseFloat(obj.get("poid").toString());
-                       
+                       float id = Float.parseFloat(obj.get("id").toString());
+                        prod.setId((int) id);
                         prod.setCaracteristiques(obj.get("caracteristiques").toString());
                         prod.setDescription(obj.get("description").toString());
                         prod.setId_categorie(obj.get("idCategorie").toString());
@@ -93,6 +95,56 @@ public class ServiceProduit implements IntService<Produit> {
     @Override
     public Produit get(Produit obj) {
         return null;
+        //To change body of generated methods, choose Tools | Templates.
+    }
+    
+     public Produit get(Lignecommande obj) {
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/finpro/"+obj.getId_produit());
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                JSONParser jsonp = new JSONParser();
+                
+                try {
+                    Map<String, Object> tasks = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
+                    System.out.println(tasks);
+                    Map<String, Object> obje;
+                    obje = (Map<String, Object>) tasks;
+                    System.out.println(obje);
+                        Produit prod = new Produit();
+                        float id = Float.parseFloat(obje.get("id").toString());
+                       
+                        prod.setCaracteristiques(obje.get("caracteristiques").toString());
+                        prod.setDescription(obje.get("description").toString());
+                        prod.setId_categorie(obje.get("idCategorie").toString());
+                        prod.setId((int) id);
+                        prod.setLabel(obje.get("label").toString());
+                        prod.setNom_image(obje.get("nomImage").toString());
+                        double prixn = Double.parseDouble(obje.get("prixNouv").toString());
+                        prod.setPrix_nouv(prixn);
+                        
+                       ligne=prod;
+                        
+                        
+                        
+                       
+                        
+                       
+                       
+                        
+                        
+                    
+                    
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        
+        return ligne;
         //To change body of generated methods, choose Tools | Templates.
     }
 

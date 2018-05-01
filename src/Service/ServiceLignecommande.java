@@ -5,6 +5,8 @@
  */
 package Service;
 
+import Entite.Commande;
+import Entite.Lignecommande;
 import Entite.User;
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
@@ -18,15 +20,15 @@ import java.util.List;
 import java.util.Map;
 /**
  *
- * @author azizkastalli
+ * @author USER
  */
-public class ServiceUser implements IntService<User> {
+public class ServiceLignecommande implements IntService<Lignecommande> {
 
     @Override
-    public void Create(User obj) {
+    public void Create(Lignecommande obj) {
 
          ConnectionRequest con = new ConnectionRequest();
-       String Url = "http://localhost/pidev3.0/web/app_dev.php/newus"+"/"+obj.getUsername()+"/"+obj.getEmail()+"/"+obj.getPassword()+"/"+obj.getRoles()+"/"+obj.getNom()+"/"+obj.getPrenom()+"/"+obj.getNum_tel();
+        String Url = "http://localhost/pidev3.0/web/app_dev.php/newlc"+"/"+obj.getId_commande()+"/"+obj.getId_client()+"/"+obj.getId_produit()+"/"+obj.getQte();
         System.out.println(Url);
         con.setUrl(Url);
         con.addResponseListener((e) -> {
@@ -39,19 +41,19 @@ public class ServiceUser implements IntService<User> {
     }
 
     @Override
-    public void Delete(User obj) {
+    public void Delete(Lignecommande obj) {
      //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void Update(User obj) {
+    public void Update(Lignecommande obj) {
       //To change body of generated methods, choose Tools | Templates.
     }
 
  @Override
-    public ArrayList<User> getAll() {
+    public ArrayList<Lignecommande> getAll() {
        
-        ArrayList<User> listTasks = new ArrayList<>();
+        ArrayList<Lignecommande> listTasks = new ArrayList<>();
         ConnectionRequest con = new ConnectionRequest();
         con.setUrl("http://localhost/pidev3.0/web/app_dev.php/all");
         con.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -64,7 +66,7 @@ public class ServiceUser implements IntService<User> {
                     System.out.println(tasks);
                     List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
                     for (Map<String, Object> obj : list) {
-                        User prod = new User();
+                        Lignecommande prod = new Lignecommande();
                         
                         float poi = Float.parseFloat(obj.get("poid").toString());
                        
@@ -88,9 +90,9 @@ public class ServiceUser implements IntService<User> {
     }
 
     @Override
-    public User get(User obj) {
+    public Lignecommande get(Lignecommande obj) {
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/finus/"+obj.getUsername());
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/finlincom/"+obj.getId_commande());
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -102,20 +104,24 @@ public class ServiceUser implements IntService<User> {
                     Map<String, Object> obje;
                     obje = (Map<String, Object>) tasks;
                     
-                        User prod = new User();
+                        Lignecommande prod = new Lignecommande();
                         
                        List<String> poi = (List<String>) obje.get("roles");
                         System.out.println(obje);
-                        float id = Float.parseFloat(obje.get("id").toString());
-                        prod.setEmail(obje.get("email").toString());
-                        prod.setPassword(obje.get("password").toString());
-                        prod.setRoles(obje.get("roles").toString());
-                        prod.setId((int) id);
+                        float id_commande = Float.parseFloat(obje.get("id_commande").toString());
+                        prod.setId_commande((int) id_commande);
+                        float Id_client = Float.parseFloat(obje.get("id_client").toString());
+                        prod.setId_client((int) Id_client);
+                        float id_produit = Float.parseFloat(obje.get("id_produit").toString());
+                        prod.setId_produit((int) id_produit);
+                        float qte = Float.parseFloat(obje.get("qte").toString());
+                        prod.setQte((int) qte);
                         
-                        obj.setEmail(prod.getEmail());
-                        obj.setPassword(prod.getPassword());
-                        obj.setRoles(poi.get(0));
-                        obj.setId(prod.getId());
+                        obj.setId_client(prod.getId_client());
+                        obj.setId_commande(prod.getId_commande());
+                        obj.setId_produit(prod.getId_produit());
+                        obj.setQte(prod.getQte());
+                        
                        
                        
                         
@@ -131,6 +137,51 @@ public class ServiceUser implements IntService<User> {
         NetworkManager.getInstance().addToQueueAndWait(con);
         
         return obj;
+        //To change body of generated methods, choose Tools | Templates.
+    }
+    public ArrayList<Lignecommande> getc(Commande obj) {
+        
+        ArrayList<Lignecommande> listTasks = new ArrayList<>();
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/finlincom/"+obj.getId());
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                JSONParser jsonp = new JSONParser();
+                
+                try {
+                    Map<String, Object> tasks = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
+                    System.out.println(tasks);
+                    List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
+                    for (Map<String, Object> objec : list) {
+                    Lignecommande prod = new Lignecommande();
+                    
+                        prod.setId_commande(obj.getId());
+                        float Id_client = Float.parseFloat(objec.get("idClient").toString());
+                        prod.setId_client((int) Id_client);
+                        float Id_produit = Float.parseFloat(objec.get("idProduit").toString());
+                        prod.setId_produit((int) Id_produit);
+                        float qte=Float.parseFloat(objec.get("qte").toString());
+                        prod.setQte((int) qte);
+                        
+                        listTasks.add(prod);
+                    }
+                    
+                       
+                       
+                        
+                        
+                    
+                    
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        
+        return listTasks;
         //To change body of generated methods, choose Tools | Templates.
     }
 

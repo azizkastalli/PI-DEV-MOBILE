@@ -140,7 +140,7 @@ b.addActionListener(e -> {
             double poi = Double.parseDouble(poid.getText());
             int quant = Integer.parseInt(quantite.getText());
             
-            Produit t = new Produit(caracteristique.getText(),description.getText(),"confirmer",b.getTextLine1(),0,image.getText(),poi,0,pri,quant,0,labell.getText());
+            Produit t = new Produit(caracteristique.getText(),description.getText(),"confirmer",b.getTextLine1(),Gui.Login.loggduser.getId(),image.getText(),poi,0,pri,quant,0,labell.getText());
             ser.Create(t);
              Dialog.show("Ajout du Produit", "Votre Produit a été ajouter avec succes", "OK", null);
              allProduit al = new allProduit();

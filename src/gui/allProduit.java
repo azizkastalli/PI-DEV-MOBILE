@@ -79,7 +79,21 @@ ServiceFavoris fv = new ServiceFavoris();
           
           SpanLabel label = new SpanLabel(e.getLabel());
               Button    btndetail=new Button("Details");
-                
+                 Button    btncart=new Button("ajout au panier");
+                  btncart.addActionListener(new ActionListener() {
+                   @Override
+                   public void actionPerformed(ActionEvent evt) {
+                       ArrayList<Object> nb_pdt = new ArrayList<>();
+                       nb_pdt.add(0,e);
+                       System.out.println(nb_pdt);
+                       nb_pdt.add(1, 1);
+                       Gui.Login.panier.add(nb_pdt);
+                       
+                       System.out.println(Gui.Login.panier);
+                       
+                       
+                   }
+               });
               btndetail.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent evt) {
@@ -91,9 +105,16 @@ ServiceFavoris fv = new ServiceFavoris();
                  al.getF().show();
              }
          });
+                f.getToolbar().addCommandToSideMenu("voir panier",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Gui.Panier panpage = new Gui.Panier();
+                 panpage.getF().show();
+             }
+         });
                     Button fav = new Button();
                    
-                    if(fv.getAllvot(0, e.getLabel())==true)
+                    if(fv.getAllvot(Gui.Login.loggduser.getId(), e.getLabel())==true)
                     {
                         fav.setText("Favorisé");
                         fav.addActionListener(new ActionListener() {
@@ -102,7 +123,7 @@ ServiceFavoris fv = new ServiceFavoris();
                                 fv.Deletefav(e.getLabel());
                        fav.setText("Défavorisé");
                                 Dialog.show("Favoris", "Votre Produit a été Défavorisé", "OK", null);
-                        fo.show();
+                        
                         }
                     });
                     }
@@ -112,11 +133,11 @@ ServiceFavoris fv = new ServiceFavoris();
                 fav.addActionListener(new ActionListener() {
                    @Override
                    public void actionPerformed(ActionEvent evt) {
-                       Favoris favo = new Favoris(0, e.getLabel());
+                       Favoris favo = new Favoris(Gui.Login.loggduser.getId(), e.getLabel());
                        fv.Create(favo);
                         fav.setText("Favorisé");
                        Dialog.show("Favoris", "Votre Produit a été Favorisé", "OK", null);
-                        fo.show();
+                        
                         
                    }
                });
@@ -179,12 +200,12 @@ ServiceFavoris fv = new ServiceFavoris();
         public void actionPerformed(ActionEvent evt) {
 
             ServiceVote SV= new ServiceVote();
-            Vote v = new Vote(e.getLabel(),starRank.getProgress(), 0);
+            Vote v = new Vote(e.getLabel(),starRank.getProgress(), Gui.Login.loggduser.getId());
             SV.Create(v);
             Dialog.show("Rate", "Votre vote a été ajouter avec succes", "OK", null);
            
             
-            fo.showBack();
+           
             
         }
     });
@@ -199,6 +220,7 @@ ServiceFavoris fv = new ServiceFavoris();
                SS.add(desc);
                SS.add(prix);
                SS.add(vott);
+               SS.add(btncart);
                f.add(SS);
                f.add(fav);
                f.add(FlowLayout.encloseCenter(starRank));
@@ -218,8 +240,17 @@ ServiceFavoris fv = new ServiceFavoris();
           c.addAll(image,label,btndetail);
           event.addAll(c);
           
+          
       }
       
+         
+          fo.getToolbar().addCommandToSideMenu("voir panier",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Gui.Panier panpage = new Gui.Panier();
+                 panpage.getF().show();
+             }
+         });
       fo.add(event);
          
     }
