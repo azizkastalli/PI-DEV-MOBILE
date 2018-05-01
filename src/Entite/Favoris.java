@@ -27,6 +27,11 @@ public class Favoris {
         this.id_produit = id_produit;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    
     public int getId() {
         return id;
     }

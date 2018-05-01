@@ -12,19 +12,19 @@ package Entite;
 public class Vote {
      private int id;
      private String id_produit;
-     private Number vote;
+     private float votee;
      private int id_user;
 
     public Vote() {
     }
 
     public Vote(float vote) {
-       this.vote = vote;
+       this.votee = vote;
     }
 
-    public Vote(String id_produit, Number vote, int id_user) {
+    public Vote(String id_produit, float vote, int id_user) {
         this.id_produit = id_produit;
-        this.vote = vote;
+        this.votee = vote;
         this.id_user = id_user;
     }
 
@@ -52,23 +52,19 @@ public class Vote {
         this.id_produit = id_produit;
     }
 
-    public Number getVote() {
-        return vote;
+    public float getVotee() {
+        return votee;
     }
 
-    public void setVote(Number vote) {
-        this.vote = vote;
+    public void setVotee(float vote) {
+        this.votee = vote;
     }
 
-    public Vote(int id, String id_produit, Number vote) {
-        this.id = id;
+   
+
+    public Vote(String id_produit, float vote) {
         this.id_produit = id_produit;
-        this.vote = vote;
-    }
-
-    public Vote(String id_produit, Number vote) {
-        this.id_produit = id_produit;
-        this.vote = vote;
+        this.votee = vote;
     }
 
  

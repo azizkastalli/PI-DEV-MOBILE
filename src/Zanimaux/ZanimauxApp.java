@@ -1,8 +1,6 @@
 package Zanimaux;
 
 
-import Gui.EspaceEvenement;
-import Gui.EspaceMagasin;
 import static com.codename1.ui.CN.*;
 import com.codename1.ui.Form;
 import com.codename1.ui.Dialog;
@@ -10,6 +8,9 @@ import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 import com.codename1.io.Log;
 import com.codename1.ui.Toolbar;
+
+import Gui.Login;
+
 
 
 
@@ -53,11 +54,9 @@ public class ZanimauxApp {
         }
         
         
-         /*EspaceEvenement EV = new EspaceEvenement();
-         EV.getF().show();
-    */
-         EspaceMagasin EM = new EspaceMagasin();
-         EM.getF().show();
+
+         Login L = new Login();
+         L.getF().show();
        
     }
 
