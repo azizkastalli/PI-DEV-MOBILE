@@ -18,6 +18,7 @@ import com.codename1.ui.ButtonGroup;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.EncodedImage;
+import com.codename1.ui.Font;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.RadioButton;
@@ -196,39 +197,49 @@ public class AllEncheres {
       {
           //bloc de creation d'image
           ImageViewer image = new ImageViewer();
-          Image placeholder = Image.createImage( 200, 200, 0xbfc9d2); 
+          Image placeholder = Image.createImage( 100, 100, 0xbfc9d2); 
           EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
           Image img=URLImage.createToStorage(encImage, e.getLabel() ,"http://localhost/pidev8.0/web/images/gallery/"+e.getNom_image(), URLImage.RESIZE_SCALE);
           image.setImage(img);
           
-          SpanLabel label = new SpanLabel(e.getLabel());
-          SpanLabel SeuilMise = new SpanLabel(String.valueOf(e.getSeuil_mise()));
+          SpanLabel participlabel = new SpanLabel();
+          participlabel.getTextAllStyles().setFont(Font.createSystemFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_MEDIUM));
+
+          SpanLabel label = new SpanLabel("Label :  " +e.getLabel());
+          SpanLabel SeuilMise = new SpanLabel(String.valueOf("Seuil Mise : "+e.getSeuil_mise()));
+          SeuilMise.getTextAllStyles().setFont(Font.createSystemFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_MEDIUM));
+
           Date datecurr = new Date();
           OnOffSwitch participer = new  OnOffSwitch();
-                    if(e.getDate_debut().getTime()<datecurr.getTime())
+           if(e.getDate_debut().getTime()<datecurr.getTime())
            { 
+               participlabel.setText("vous ne puvez plus participer à cette enchere");
                participer.setHidden(true);
            }
              
-          participer.setOff("participer");
-          participer.setOn("Quitter");
+
           participer.setValue(false);
-            
+          participlabel.setText("Participer");
+
           for(Integer id : IdEncheres )
           {
              if(e.getId_encheres()==id)
              {participer.setValue(true);
+              participlabel.setText("Quitter");
               }
                       }
           
           Countdown countdown = new Countdown();
           Container cd = countdown.SetCountDown(e.getDate_debut());
           Container c =new Container(new BoxLayout(BoxLayout.Y_AXIS));
+          Container c2 =new Container(new BoxLayout(BoxLayout.Y_AXIS));
+          Container c1 =new Container(new BoxLayout(BoxLayout.X_AXIS));
 
-            c.addAll(image,label,participer,SeuilMise,cd);
-          
-           encheres.add(c);
-          SortEncheres.put(e.getId_encheres(),c);
+           c.addAll(participlabel,participer,SeuilMise);
+           c1.addAll(image,c);
+           c2.addAll(label,c1,cd);
+           encheres.add(c2);
+          SortEncheres.put(e.getId_encheres(),c2);
           
           participer.addActionListener((evt) -> {
                 Participantsencheres participant = new Participantsencheres();
@@ -243,6 +254,7 @@ public class AllEncheres {
                 
                if( participer.isValue() && add==true )            
                {
+                 participlabel.setText("Quitter");
                  String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(e.getDate_debut());
                  participant.setDebut_session(date);
                  participant.setId_session(e.getId_encheres());
@@ -253,6 +265,7 @@ public class AllEncheres {
                }
                else if (participer.isValue()==false && Dialog.show("Confirmer", "Voulez vous vraiment ne plus participer à cette encheres ?", "Oui", "Non") ) 
                    {
+                 participlabel.setText("Participer");
                  participant.setId_session(e.getId_encheres());
                  participant.setId_user(1);
                  Serviceparticipants.Delete(participant); 

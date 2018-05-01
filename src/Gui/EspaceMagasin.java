@@ -15,6 +15,7 @@ import java.io.IOException;
 
 
 
+
 /**
  *
  * @author azizkastalli
@@ -50,8 +51,13 @@ public class EspaceMagasin {
             @Override
             public void actionPerformed(ActionEvent evt) {
               
-                  AjoutEvent add=new AjoutEvent();
+                  AddEncheres add;
+                try {
+                    add = new AddEncheres();
                     add.getF().show();
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
                 
            
             }
@@ -70,14 +76,17 @@ public class EspaceMagasin {
             }
         });
         
-        encheres.addActionListener(
-        (evt) -> {
-            ModifSuppEvent ae;
-            ae = new ModifSuppEvent();
-            ae.getF().show();
-           
-        }
-        );
+        encheres.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+             try {
+                    AllEncheres allEncheres = new AllEncheres();
+                    allEncheres.getF().show();
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        });
     }
 
     public Form getF() {

@@ -2,6 +2,7 @@ package Zanimaux;
 
 
 import Gui.EspaceEvenement;
+import Gui.EspaceMagasin;
 import static com.codename1.ui.CN.*;
 import com.codename1.ui.Form;
 import com.codename1.ui.Dialog;
@@ -52,17 +53,11 @@ public class ZanimauxApp {
         }
         
         
-         EspaceEvenement EV = new EspaceEvenement();
+         /*EspaceEvenement EV = new EspaceEvenement();
          EV.getF().show();
-     /*       
-        try {
-            AllEncheres encheres = new AllEncheres();
-            encheres.getF().show();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-       
-*/  
+    */
+         EspaceMagasin EM = new EspaceMagasin();
+         EM.getF().show();
        
     }
 
