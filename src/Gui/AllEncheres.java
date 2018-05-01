@@ -27,6 +27,7 @@ import com.codename1.ui.events.DataChangedListener;
 import com.codename1.ui.layouts.BoxLayout;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -202,12 +203,17 @@ public class AllEncheres {
           
           SpanLabel label = new SpanLabel(e.getLabel());
           SpanLabel SeuilMise = new SpanLabel(String.valueOf(e.getSeuil_mise()));
-          
+          Date datecurr = new Date();
           OnOffSwitch participer = new  OnOffSwitch();
-     //     participer.setOff("participer");
-       //   participer.setOn("Quitter");
+                    if(e.getDate_debut().getTime()<datecurr.getTime())
+           { 
+               participer.setHidden(true);
+           }
+             
+          participer.setOff("participer");
+          participer.setOn("Quitter");
           participer.setValue(false);
-
+            
           for(Integer id : IdEncheres )
           {
              if(e.getId_encheres()==id)
@@ -218,8 +224,10 @@ public class AllEncheres {
           Countdown countdown = new Countdown();
           Container cd = countdown.SetCountDown(e.getDate_debut());
           Container c =new Container(new BoxLayout(BoxLayout.Y_AXIS));
-          c.addAll(image,label,participer,SeuilMise,cd);
-          encheres.add(c);
+
+            c.addAll(image,label,participer,SeuilMise,cd);
+          
+           encheres.add(c);
           SortEncheres.put(e.getId_encheres(),c);
           
           participer.addActionListener((evt) -> {

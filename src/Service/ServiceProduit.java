@@ -56,7 +56,8 @@ public class ServiceProduit implements IntService<Produit> {
                     List<Map<String, Object>> list = (List<Map<String, Object>>) produits.get("root");
                     
                     for (Map<String, Object> obj : list) {
-                        String id = obj.get("id").toString();
+                        if(!obj.get("etat").toString().equals("encheres"))
+                {String id = obj.get("id").toString();
                         double d = Double.parseDouble(id);
                         Double dd= new Double(d);
                         int idconverted = dd.intValue();
@@ -66,8 +67,9 @@ public class ServiceProduit implements IntService<Produit> {
                         produit.setNom_image(obj.get("nomImage").toString());
                         produit.setLabel(obj.get("label").toString());
                         
+                        
                         listProduit.add(produit);
-
+                }
                     }
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());

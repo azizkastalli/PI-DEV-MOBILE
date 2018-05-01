@@ -115,8 +115,11 @@ public class UpdateDeleteEncheres {
              if( verifmise && verifdate )    
              { ServiceEncheres serviceEncheres=new ServiceEncheres();
                   if (Dialog.show("Confirmer", "Voulez vous vraiment modifier cette enchere ?", "Oui", "Non")) 
-                   serviceEncheres.Update(E);}
-              Dialog.show("Mise à jour avec succes", "l'encehres "+e.getLabel()+" est modifié ", "OK", null);
+                  {
+                      serviceEncheres.Update(E);
+                       Dialog.show("Mise à jour avec succes", "l'encehres "+e.getLabel()+" est modifié ", "OK", null);
+                  }
+                   }
               }
           });
           
@@ -128,8 +131,9 @@ public class UpdateDeleteEncheres {
                  E.setId_encheres(e.getId_encheres());
                  ServiceEncheres serviceEncheres=new ServiceEncheres();
                   if (Dialog.show("Confirmer", "Voulez vous vraiment supprimer cette enchere ?", "Oui", "Non")) 
-                   {serviceEncheres.Delete(E);}     
-                 Dialog.show("suppression avec succes", "l'encehres "+e.getLabel()+" est supprimé ", "OK", null);
+                   {serviceEncheres.Delete(E);
+                    Dialog.show("suppression avec succes", "l'encehres "+e.getLabel()+" est supprimé ", "OK", null);
+                      }     
               }
           });
       }

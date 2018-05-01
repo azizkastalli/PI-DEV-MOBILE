@@ -106,7 +106,7 @@ public class AddEncheres {
              {ServiceEncheres serviceEncheres=new ServiceEncheres();
               serviceEncheres.Create(E);
               Dialog.show("Ajout avec succes", "le produit "+p.getLabel()+" est ajouté aux encheres", "OK", null);
-}
+                  }
                   
                  
               }
