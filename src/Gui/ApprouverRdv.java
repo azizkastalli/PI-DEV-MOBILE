@@ -33,7 +33,7 @@ public class ApprouverRdv {
         ConnectionRequest con = new ConnectionRequest();
         String Url = "http://localhost/pidev3.0/web/app_dev.php/approuvezadmin";
         Form hi = new Form("Medecins", new BoxLayout(BoxLayout.Y_AXIS));
-            hi.getToolbar().addCommandToLeftBar("back", a.getTheme().getImage("back-command.png"), l -> {
+            hi.getToolbar().addCommandToLeftBar("back", null, l -> {
             f.showBack();
         });
         con.setUrl(Url);
