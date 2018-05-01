@@ -20,7 +20,6 @@ import com.codename1.ui.Dialog;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
-import com.codename1.ui.Label;
 import com.codename1.ui.RadioButton;
 import com.codename1.ui.TextField;
 import com.codename1.ui.URLImage;
@@ -47,6 +46,7 @@ public class AllEncheres {
          ArrayList<Encheres> listeEncheres = serviceEncheres.getAll();
          ServiceParticipantEncheres ServiceParticipant=new ServiceParticipantEncheres();
          ArrayList<Integer> IdEncheres = ServiceParticipant.verificationParticipation(1);
+         
           TextField recherche = new  TextField();
           RadioButton rb1 = new RadioButton("All");
           RadioButton rb2 = new RadioButton("Participe"); 
@@ -61,16 +61,20 @@ public class AllEncheres {
          //radio buttons listener
          rb1.addActionListener((evt) -> {
                 encheres.removeAll();
-                 for (Encheres e : listeEncheres) 
+            for (Encheres e : listeEncheres) 
                  { if(recherche.getText().equals(""))
-                     encheres.add(SortEncheres.get(e.getId_encheres()));
+                   {
+                       encheres.add(SortEncheres.get(e.getId_encheres()));
+                   }
                   else
                    { 
-                       if(e.getLabel().startsWith(recherche.getText()))
+                       if(e.getLabel().contains(recherche.getText()) )
                             encheres.add(SortEncheres.get(e.getId_encheres()));
                     }
+              
                  }
          });
+         
          rb2.addActionListener((evt) -> {
                 encheres.removeAll();
                  for (Encheres e : listeEncheres) 
@@ -85,7 +89,7 @@ public class AllEncheres {
                    { 
                             for(Integer id : IdEncheres )
                              {
-                                if(e.getId_encheres()==id && e.getLabel().startsWith(recherche.getText()))
+                                if(e.getId_encheres()==id && e.getLabel().contains(recherche.getText()))
                                     encheres.add(SortEncheres.get(e.getId_encheres()));}
                     }
                  }
@@ -93,20 +97,30 @@ public class AllEncheres {
          
          rb3.addActionListener((evt) -> {
                 encheres.removeAll();
+                boolean ajout;  
+             
                  for (Encheres e : listeEncheres) 
-                 { if(recherche.getText().equals(""))
+                 {              
+                   ajout= true;
+                   if(recherche.getText().equals(""))
                      { 
                           for(Integer id : IdEncheres )
                              {
-                                if(e.getId_encheres()!=id)
-                                    encheres.add(SortEncheres.get(e.getId_encheres()));}
-                                    }
+                                 if(e.getId_encheres()==id)
+                                   ajout=false;  
+                                     }
+                         if(ajout)
+                             encheres.add(SortEncheres.get(e.getId_encheres()));  
+                     } 
                   else
                    { 
-                            for(Integer id : IdEncheres )
+                        for(Integer id : IdEncheres )
                              {
-                                if(e.getId_encheres()!=id && e.getLabel().startsWith(recherche.getText()))
-                                    encheres.add(SortEncheres.get(e.getId_encheres()));}
+                                if(e.getId_encheres()==id)
+                                     ajout=false;  
+                                     }
+                         if(ajout && e.getLabel().contains(recherche.getText()) )
+                             encheres.add(SortEncheres.get(e.getId_encheres()));  
                     }
                  }
          });
@@ -116,8 +130,11 @@ public class AllEncheres {
              @Override
              public void dataChanged(int type, int index) {
                  encheres.removeAll();
+                 boolean ajout;
+              
                  for (Encheres e : listeEncheres) 
                  { 
+                    ajout= true;
                      if(recherche.getText().equals(""))
                          {
                       if(rb1.isSelected())
@@ -132,15 +149,17 @@ public class AllEncheres {
                       }
                       else if (rb3.isSelected())
                       {
-                          for(Integer id : IdEncheres )
+                           for(Integer id : IdEncheres )
                              {
-                                if(e.getId_encheres()!=id)
-                                    encheres.add(SortEncheres.get(e.getId_encheres()));
-                                    }
+                                 if(e.getId_encheres()==id)
+                                   ajout=false;  
+                                     }
+                         if(ajout)
+                             encheres.add(SortEncheres.get(e.getId_encheres()));  
                       }
                            }  
                      
-                     else if( (e.getLabel().startsWith(recherche.getText())) )
+                     else if( (e.getLabel().contains(recherche.getText())) )
                      {
                        if(rb1.isSelected())
                          encheres.add(SortEncheres.get(e.getId_encheres()));
@@ -154,21 +173,19 @@ public class AllEncheres {
                       }
                       else if (rb3.isSelected())
                       {
-                           for(Integer id : IdEncheres )
+                         for(Integer id : IdEncheres )
                              {
-                                if(e.getId_encheres()!=id)
-                                    encheres.add(SortEncheres.get(e.getId_encheres()));
-                                    }
-                       }
+                                 if(e.getId_encheres()==id)
+                                   ajout=false;  
+                                     }
+                                 if(ajout)
+                                   encheres.add(SortEncheres.get(e.getId_encheres()));  
+                        }
                      }                    
                    }                 
              }
          });
-         
-         
-        
-        
-          
+             
        
           f.getToolbar().addCommandToRightBar("back", null, (ev)->{EspaceMagasin EM=new EspaceMagasin();
           EM.getF().show();
@@ -187,18 +204,16 @@ public class AllEncheres {
           SpanLabel SeuilMise = new SpanLabel(String.valueOf(e.getSeuil_mise()));
           
           OnOffSwitch participer = new  OnOffSwitch();
-          participer.setOff("participer");
-          participer.setOn("Quitter");
+     //     participer.setOff("participer");
+       //   participer.setOn("Quitter");
           participer.setValue(false);
 
           for(Integer id : IdEncheres )
           {
              if(e.getId_encheres()==id)
              {participer.setValue(true);
-              participer.setUIID("false");}
-             else
-               participer.setUIID("true");
-          }
+              }
+                      }
           
           Countdown countdown = new Countdown();
           Container cd = countdown.SetCountDown(e.getDate_debut());
@@ -208,12 +223,10 @@ public class AllEncheres {
           SortEncheres.put(e.getId_encheres(),c);
           
           participer.addActionListener((evt) -> {
-              int count2 = 0;
                 Participantsencheres participant = new Participantsencheres();
                 ServiceParticipantEncheres Serviceparticipants = new ServiceParticipantEncheres();
-               if( participer.isValue() &&  participer.getUIID().equals("true") )            
+               if( participer.isValue() )            
                {
-                 participer.setUIID("false");
                  String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(e.getDate_debut());
                  participant.setDebut_session(date);
                  participant.setId_session(e.getId_encheres());
@@ -224,10 +237,8 @@ public class AllEncheres {
                }
                else 
                {
-                  if (Dialog.show("Confirmer", "Voulez vous vraiment ne plus participer à cette encheres ?", "Oui", "Non") && count2==0) 
+                  if (Dialog.show("Confirmer", "Voulez vous vraiment ne plus participer à cette encheres ?", "Oui", "Non") ) 
                    {
-                 count2++;      
-                 participer.setUIID("true");
                  participant.setId_session(e.getId_encheres());
                  participant.setId_user(1);
                  Serviceparticipants.Delete(participant); 
@@ -236,14 +247,14 @@ public class AllEncheres {
                     {
                            if(e.getId_encheres()==id)
                              break;
-                        count++;
-                     }
+                           else
+                           count++;
+                    }
                  IdEncheres.remove(count);
                    }
                   else
                   {
                      participer.setValue(true);
-                     participer.setUIID("false");
                    }
                 }
               

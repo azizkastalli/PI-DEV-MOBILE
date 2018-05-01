@@ -22,7 +22,7 @@ public class EspaceMagasin {
         private Form f;
         
     public EspaceMagasin() {
-        f = new Form(new BoxLayout(BoxLayout.X_AXIS));
+        f = new Form(new BoxLayout(BoxLayout.Y_AXIS));
         Button gestion = new Button("gestion");
         Button ajout = new Button("ajout");
         Button encheres = new Button("Encheres");
