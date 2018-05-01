@@ -12,9 +12,6 @@ import Service.ServiceEvenement;
 import com.codename1.components.ImageViewer;
 
 import com.codename1.components.SpanLabel;
-import com.codename1.io.File;
-import com.codename1.io.FileSystemStorage;
-import com.codename1.io.Storage;
 import com.codename1.ui.Button;
 
 import com.codename1.ui.Container;
@@ -36,7 +33,6 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.types.FacebookType;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 

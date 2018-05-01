@@ -6,9 +6,7 @@
 package Gui;
 
 import Entite.AnimalPerdu;
-import Entite.AnimalSdf;
 import Service.ServiceAnimalperdu;
-import Service.ServiceAnimalsdf;
 import com.codename1.components.SpanLabel;
 import com.codename1.ui.Container;
 import com.codename1.ui.Form;

@@ -5,9 +5,7 @@
  */
 package Gui;
 
-import Entite.AnimalPerdu;
 import Entite.AnimalSdf;
-import Service.ServiceAnimalperdu;
 import Service.ServiceAnimalsdf;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;

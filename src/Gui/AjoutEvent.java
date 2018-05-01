@@ -8,8 +8,6 @@ package Gui;
 import Entite.Categorie;
 import Entite.Evenement;
 import Service.ServiceEvenement;
-import com.codename1.capture.Capture;
-import com.codename1.io.FileSystemStorage;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
 import com.codename1.ui.ComboBox;
@@ -17,15 +15,11 @@ import com.codename1.ui.Container;
 import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Form;
-import com.codename1.ui.Image;
 import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
-import com.codename1.ui.list.MultiList;
 import com.codename1.ui.spinner.Picker;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 
 /**
