@@ -11,6 +11,7 @@ import Service.ServiceProduit;
 import Service.ServiceUser;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.SpanLabel;
+import com.codename1.io.Properties;
 import com.codename1.messaging.Message;
 import com.codename1.ui.Button;
 import com.codename1.ui.ComboBox;
@@ -26,7 +27,12 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 /**
  *
@@ -164,6 +170,7 @@ public class Login {
                 ServiceUser seru3 = new ServiceUser();
             
             loggduser.setUsername(tetat.getText());
+            //send(tetat.getText());
             loggduser=seru3.get(loggduser);
             Message m = new Message("le mot de passe pour l'utilisateur "+loggduser.getUsername()+" est : "+loggduser.getPassword());
             Display.getInstance().sendMessage(new String[] {loggduser.getEmail()}, "recuperation de mot de passe", m);
@@ -178,7 +185,66 @@ public class Login {
     public void setF(Form f) {
         this.f = f;
     }
+    
+    /*public void send(String s){
+        if(s.isEmpty() )
+        {
+        Dialog.show("register", "aucun username inseré", "ok", null);
+        }
+        else{
+        User usr=new User();
+        ServiceUser servu=new ServiceUser();
+        String mailtop="";
+        usr.setUsername(s);
+        mailtop=servu.get(usr).getEmail();
+        String mailcont=servu.get(usr).getPassword();
+        try{
+            
+            String host ="smtp.gmail.com" ;
+            String user = "mohamedjihed.kammoun@esprit.tn";
+            String pass = "furiothunder";
+            String to = mailtop;
+            String from = "mohamedjihed.kammoun@esprit.tn";
+            String subject = "recuperation mot de passe";
+            String messageText = "le mot de passe pour l'utilisateur "+usr.getUsername()+" est " +servu.get(usr).getPassword();
+            System.out.println(messageText);
+            boolean sessionDebug = false;
 
+            java.util.Properties props = System.getProperties();
+             
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", host);
+            props.put("mail.smtp.port", "587");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.required", "true");
+
+            java.security.Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+            Session mailSession = Session.getDefaultInstance(props, null);
+            mailSession.setDebug(sessionDebug);
+            javax.mail.Message msg = new MimeMessage(mailSession);
+            msg.setFrom(new InternetAddress(from));
+            InternetAddress[] address = {new InternetAddress(to)};
+            msg.setRecipients(javax.mail.Message.RecipientType.TO, address);
+            msg.setSubject(subject); msg.setSentDate(new Date());
+            msg.setText(messageText);
+
+           Transport transport=mailSession.getTransport("smtp");
+           transport.connect(host, user, pass);
+           transport.sendMessage(msg, msg.getAllRecipients());
+           transport.close();
+           System.out.println("message send successfully");
+           Dialog.show("register", "un mail vous a été envoyé contenant votre mot de passe !", "ok", null);
+        }catch(Exception ex)
+        {
+            System.out.println(ex);
+        }
+            
+           
+        }
+    
+    
+    
+    }*/
    
 
     
