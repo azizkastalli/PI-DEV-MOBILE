@@ -44,14 +44,18 @@ public class Countdown {
          this.timer = new Timer();  
          this.verif=true;
          
-         this.days =new Label("Days");
-         this.hours =new Label("Hours");
+         this.days =new Label("Jours");
+         this.hours =new Label("Heures");
          this.minutes =new Label("Minutes");
-         this.secondes =new Label("Seconds");
+         this.secondes =new Label("Secondes");
          this.Tdays =new Label("00");
+         this.Tdays.setPreferredW(80);
          this.Thours =new Label("00");
+         this.Thours.setPreferredW(80);
          this.Tminutes =new Label("00");
+         this.Tminutes.setPreferredW(80);
          this.Tsecondes =new Label("00");
+         this.Tsecondes.setPreferredW(80);
          
          this.cdownLabel.addAll(days,hours,minutes,secondes);
          this.cdownTimer.addAll(Tdays,Thours,Tminutes,Tsecondes);

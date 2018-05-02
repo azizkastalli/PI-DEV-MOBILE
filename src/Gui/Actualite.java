@@ -21,7 +21,7 @@ public class Actualite {
    private Form f;
 
     public Actualite() {
-       this.f = new Form();
+       this.f = new Form("Actualité");
        
           f.getToolbar().addCommandToSideMenu("Actualité",null, new ActionListener() {
              @Override
