@@ -59,13 +59,7 @@ ServiceFavoris fv = new ServiceFavoris();
          ArrayList<Produit> listeEvent = SE.getAll();
         ArrayList<Favoris> listeE = fv.getAll();
          
-      fo.getToolbar().addCommandToSideMenu("Ajout Produits",null, new ActionListener() {
-             @Override
-             public void actionPerformed(ActionEvent evt) {
-                 Gui.HomeForm HF = new HomeForm();
-                 HF.getF().show();
-             }
-         });
+      
          for(Produit e : listeEvent)
       {
           //bloc de creation d'image

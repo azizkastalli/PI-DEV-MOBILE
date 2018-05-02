@@ -95,7 +95,6 @@ b.addActionListener(e -> {
                    image.setText(i.substring(38));
                    
                } catch (IOException ex) {
-                    ex.printStackTrace();
                }
             }
                 }
@@ -135,6 +134,12 @@ b.addActionListener(e -> {
       
        
         btnajt.addActionListener((e) -> {
+            if(labell.getText().isEmpty()&&caracteristique.getText().isEmpty()&&description.getText().isEmpty()&&prix.getText().isEmpty()&&image.getText().isEmpty()&&poid.getText().isEmpty()&&quantite.getText().isEmpty())
+            {
+                             Dialog.show("Ajout du Produit", "Champs vide", "OK", null);
+
+            }
+            else{
             ServiceProduit ser = new ServiceProduit();
             double pri = Double.parseDouble(prix.getText());
             double poi = Double.parseDouble(poid.getText());
@@ -143,17 +148,10 @@ b.addActionListener(e -> {
             Produit t = new Produit(caracteristique.getText(),description.getText(),"confirmer",b.getTextLine1(),Gui.Login.loggduser.getId(),image.getText(),poi,0,pri,quant,0,labell.getText());
             ser.Create(t);
              Dialog.show("Ajout du Produit", "Votre Produit a été ajouter avec succes", "OK", null);
-             allProduit al = new allProduit();
-             al.getF().show();
+            }
         });
         
-             f2.getToolbar().addCommandToSideMenu("Les Produits",null, new ActionListener() {
-             @Override
-             public void actionPerformed(ActionEvent evt) {
-                 allProduit al = new allProduit();
-                 al.getF().show();
-             }
-         });
+             
     }
 
     public Form getF() {
