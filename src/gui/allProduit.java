@@ -99,14 +99,23 @@ ServiceFavoris fv = new ServiceFavoris();
                  al.getF().show();
              }
          });
+               
                 f.getToolbar().addCommandToSideMenu("voir panier",null, new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent d) {
                  Gui.Panier panpage = new Gui.Panier();
                  panpage.getF().show();
+                 
              }
          });
-                    Button fav = new Button();
+              f.getToolbar().addCommandToSideMenu("LogOut",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent evt) {
+                 Gui.Login al = new Gui.Login();
+                 al.getF().show();
+             }
+         });
+                Button fav = new Button();
                    
                     if(fv.getAllvot(Gui.Login.loggduser.getId(), e.getLabel())==true)
                     {
@@ -242,6 +251,13 @@ ServiceFavoris fv = new ServiceFavoris();
              @Override
              public void actionPerformed(ActionEvent d) {
                  Gui.Panier panpage = new Gui.Panier();
+                 panpage.getF().show();
+             }
+         });
+          fo.getToolbar().addCommandToSideMenu("LogOut",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Gui.Login panpage = new Gui.Login();
                  panpage.getF().show();
              }
          });

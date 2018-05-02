@@ -131,7 +131,13 @@ b.addActionListener(e -> {
         label.add(b);
         f2.add(label);
         f2.add(btnajt);
-      
+      f2.getToolbar().addCommandToSideMenu("LogOut",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent evt) {
+                 Gui.Login al = new Gui.Login();
+                 al.getF().show();
+             }
+         });
        
         btnajt.addActionListener((e) -> {
            
