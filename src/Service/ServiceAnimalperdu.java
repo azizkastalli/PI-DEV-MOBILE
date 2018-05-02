@@ -29,7 +29,7 @@ public class ServiceAnimalperdu implements IntService<AnimalPerdu>{
     @Override
     public void Create(AnimalPerdu obj) {
  ConnectionRequest con = new ConnectionRequest();
-      String Url = "http://localhost/pidev8.0/web/app_dev.php/service/create/"
+      String Url = "http://localhost/pidev3.0/web/app_dev.php/service/create/"
                 +obj.getId_animal()+"/"
                 +obj.getDateD()+"/"
                 +obj.getLieu_disparition()
@@ -53,7 +53,7 @@ public class ServiceAnimalperdu implements IntService<AnimalPerdu>{
         System.out.println("id animal : "+obj.getId_animal());
         System.out.println("mise : "+obj.getDate_disparition());
         System.out.println("date : "+obj.getLieu_disparition());
-        String Url = "http://localhost/pidev8.0/web/app_dev.php/Update/"+obj.getId_animal()
+        String Url = "http://localhost/pidev3.0/web/app_dev.php/Update/"+obj.getId_animal()
                 +"/"+obj.getDate_disparition()
                 +"/"+obj.getLieu_disparition();
         
@@ -71,7 +71,7 @@ public class ServiceAnimalperdu implements IntService<AnimalPerdu>{
     public ArrayList<AnimalPerdu> getAll() {
         ArrayList<AnimalPerdu> listsdf = new ArrayList<>();
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/pidev8.0/web/app_dev.php/service/all2");
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/service/all2");
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -120,7 +120,7 @@ public class ServiceAnimalperdu implements IntService<AnimalPerdu>{
      public ArrayList<Animal> getAllAnimal() {
       ArrayList<Animal> listAn = new ArrayList<>();
        ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/pidev8.0/web/app_dev.php/service/allAnimal");
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/service/allAnimal");
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {

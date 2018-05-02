@@ -30,7 +30,7 @@ public class ServiceEvenement implements IntService<Evenement>{
     public void Create(Evenement obj) {
         
          ConnectionRequest con = new ConnectionRequest();
-      String Url = "http://localhost/pidev8.0/web/app_dev.php/ajoutE/"
+      String Url = "http://localhost/pidev3.0/web/app_dev.php/ajoutE/"
                 +obj.getNom()+"/"
                 +obj.getDescription()+"/"
                 +obj.getNbr_participants()+"/"
@@ -52,7 +52,7 @@ public class ServiceEvenement implements IntService<Evenement>{
     public void Delete(Evenement obj) {
         ConnectionRequest con = new ConnectionRequest();
         System.out.println("delete id : "+obj.getId());
-        String Url = "http://localhost/pidev8.0/web/app_dev.php/SuppEvent/"+obj.getId();
+        String Url = "http://localhost/pidev3.0/web/app_dev.php/SuppEvent/"+obj.getId();
         con.setUrl(Url);
         
 
@@ -68,7 +68,7 @@ public class ServiceEvenement implements IntService<Evenement>{
         
         ConnectionRequest con = new ConnectionRequest();
        
-        String Url = "http://localhost/pidev8.0/web/app_dev.php/modifEvent/"+obj.getNom()
+        String Url = "http://localhost/pidev3.0/web/app_dev.php/modifEvent/"+obj.getNom()
                 +"/"+obj.getDescription()
                 +"/"+obj.getNbr_participants()
                 +"/"+obj.getNom_image()+"/"
@@ -89,7 +89,7 @@ public class ServiceEvenement implements IntService<Evenement>{
         
           ArrayList<Evenement> listEvent = new ArrayList<>();
            ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/pidev8.0/web/app_dev.php/all");
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/all");
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -141,7 +141,7 @@ public class ServiceEvenement implements IntService<Evenement>{
     public ArrayList<Categorie> getAllCat(){
     ArrayList<Categorie> listCat = new ArrayList<>();
       ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/pidev8.0/web/app_dev.php/allcat");
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/allcat");
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {

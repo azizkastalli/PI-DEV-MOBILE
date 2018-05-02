@@ -30,7 +30,7 @@ public class ServiceEncheres implements IntService<Encheres> {
     @Override
     public void Create(Encheres obj) {
       ConnectionRequest con = new ConnectionRequest();
-      String Url = "http://localhost/pidev8.0/web/app_dev.php/CreateEncheres/"
+      String Url = "http://localhost/pidev3.0/web/app_dev.php/CreateEncheres/"
                 +obj.getSeuil_mise()+"/"
                 +obj.getStringdate_debut()+"/"
                 +obj.getId_cible()
@@ -48,7 +48,7 @@ public class ServiceEncheres implements IntService<Encheres> {
     public void Update(Encheres obj) {
       ConnectionRequest con = new ConnectionRequest();
        
-        String Url = "http://localhost/pidev8.0/web/app_dev.php/UpdateEncheres/"+obj.getId_encheres()
+        String Url = "http://localhost/pidev3.0/web/app_dev.php/UpdateEncheres/"+obj.getId_encheres()
                 +"/"+obj.getSeuil_mise()
                 +"/"+obj.getStringdate_debut();
         
@@ -66,7 +66,7 @@ public class ServiceEncheres implements IntService<Encheres> {
 
         ArrayList<Encheres> listEncheres = new ArrayList<>();
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/pidev8.0/web/app_dev.php/allEncheres");
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/allEncheres");
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -117,7 +117,7 @@ public class ServiceEncheres implements IntService<Encheres> {
     @Override
     public void Delete(Encheres obj) {
     ConnectionRequest con = new ConnectionRequest();
-        String Url = "http://localhost/pidev8.0/web/app_dev.php/DeleteEncheres/"+obj.getId_encheres();
+        String Url = "http://localhost/pidev3.0/web/app_dev.php/DeleteEncheres/"+obj.getId_encheres();
         con.setUrl(Url);
         
 

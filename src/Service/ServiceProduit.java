@@ -152,7 +152,7 @@ public class ServiceProduit implements IntService<Produit> {
        
         ArrayList<Produit> listProduit = new ArrayList<>();
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/pidev8.0/web/app_dev.php/allProduits");
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/allProduits");
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {

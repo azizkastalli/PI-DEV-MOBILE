@@ -28,7 +28,7 @@ public class ServiceAnimalsdf implements IntService<AnimalSdf>{
     @Override
     public void Create(AnimalSdf obj) {
 ConnectionRequest con = new ConnectionRequest();
-      String Url = "http://localhost/pidev8.0/web/app_dev.php/service/AnimalsdF/"
+      String Url = "http://localhost/pidev3.0/web/app_dev.php/service/AnimalsdF/"
                 +obj.getSexe()+"/"
                 +obj.getDateD()+"/"
                 +obj.getLieu_trouvaille()
@@ -54,7 +54,7 @@ ConnectionRequest con = new ConnectionRequest();
     public ArrayList<AnimalSdf> getAll() {
         ArrayList<AnimalSdf> listsdf = new ArrayList<>();
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/pidev8.0/web/app_dev.php/service/all");
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/service/all");
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {

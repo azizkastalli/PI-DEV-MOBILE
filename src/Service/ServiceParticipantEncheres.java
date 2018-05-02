@@ -28,7 +28,7 @@ public class ServiceParticipantEncheres implements IntService<Participantsencher
         
 
         ConnectionRequest con = new ConnectionRequest();
-        String Url = "http://localhost/pidev8.0/web/app_dev.php/CreateParticipants/"
+        String Url = "http://localhost/pidev3.0/web/app_dev.php/CreateParticipants/"
                 +obj.getId_session()+"/"
                 +obj.getDebut_session()+"/"
                 +obj.getId_user()+"/"
@@ -46,7 +46,7 @@ public class ServiceParticipantEncheres implements IntService<Participantsencher
     public void Delete(Participantsencheres obj) {
            
     ConnectionRequest con = new ConnectionRequest();
-        String Url = "http://localhost/pidev8.0/web/app_dev.php/DeleteParticipants/"+obj.getId_user()+"/"
+        String Url = "http://localhost/pidev3.0/web/app_dev.php/DeleteParticipants/"+obj.getId_user()+"/"
                 +obj.getId_session();
         
         con.setUrl(Url);
@@ -79,7 +79,7 @@ public class ServiceParticipantEncheres implements IntService<Participantsencher
     {
        ArrayList<Integer> liste = new ArrayList<>();
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/pidev8.0/web/app_dev.php/VerifParticipants/"+userid);
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/VerifParticipants/"+userid);
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
