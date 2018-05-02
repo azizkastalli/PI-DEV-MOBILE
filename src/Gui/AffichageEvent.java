@@ -51,6 +51,35 @@ public class AffichageEvent {
          ArrayList<Evenement> listeEvent = SE.getAll();
          System.out.println("listaa : "+listeEvent);
          
+                           f.getToolbar().addCommandToSideMenu("Actualité",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent evt) {
+                 Gui.Actualite actualite = new Gui.Actualite();
+                 actualite.getF().show();
+             }
+         });
+
+         f.getToolbar().addCommandToSideMenu("Produits",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent evt) {
+                 Gui.allProduit prd = new Gui.allProduit();
+                 prd.getF().show();
+             }
+         });
+         
+         f.getToolbar().addCommandToSideMenu("Encheres",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent evt) {
+                
+                 try {
+                     Gui.AllEncheres ench = new Gui.AllEncheres();
+                     ench.getF().show();
+                 } catch (IOException ex) {
+                     System.out.println(ex.getMessage());
+                 }
+             }
+         });
+         
           f.getToolbar().addCommandToRightBar("back", null, (ev)->{EspaceMagasin EM=new EspaceMagasin();
           EM.getF().show();
           });

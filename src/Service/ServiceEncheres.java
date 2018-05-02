@@ -33,8 +33,8 @@ public class ServiceEncheres implements IntService<Encheres> {
       String Url = "http://localhost/pidev3.0/web/app_dev.php/CreateEncheres/"
                 +obj.getSeuil_mise()+"/"
                 +obj.getStringdate_debut()+"/"
-                +obj.getId_cible()
-                +"/1";
+                +obj.getId_cible()+"/"
+                +Gui.Login.loggduser.getId();
         
         con.setUrl(Url);
 
