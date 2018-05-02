@@ -134,10 +134,32 @@ b.addActionListener(e -> {
       
        
         btnajt.addActionListener((e) -> {
+           
             if(labell.getText().isEmpty()&&caracteristique.getText().isEmpty()&&description.getText().isEmpty()&&prix.getText().isEmpty()&&image.getText().isEmpty()&&poid.getText().isEmpty()&&quantite.getText().isEmpty())
             {
                              Dialog.show("Ajout du Produit", "Champs vide", "OK", null);
 
+            }
+            else if(labell.getText().isEmpty())
+            {Dialog.show("Ajout du Produit", "nom produit est vide", "OK", null);
+            }
+            else if(caracteristique.getText().isEmpty())
+            {Dialog.show("Ajout du Produit", "Caracteristique est vide", "OK", null);
+            }
+            else if(description.getText().isEmpty())
+            {Dialog.show("Ajout du Produit", "Description est vide", "OK", null);
+            }
+            else if(poid.getText().isEmpty())
+            {Dialog.show("Ajout du Produit", "Poid est vide", "OK", null);
+            }
+            else if(prix.getText().isEmpty())
+            {Dialog.show("Ajout du Produit", "Prix est vide", "OK", null);
+            }
+            else if(quantite.getText().isEmpty())
+            {Dialog.show("Ajout du Produit", "Quantite est vide", "OK", null);
+            }
+            else if(image.getText().isEmpty())
+            {Dialog.show("Ajout du Produit", "Image est vide", "OK", null);
             }
             else{
             ServiceProduit ser = new ServiceProduit();
