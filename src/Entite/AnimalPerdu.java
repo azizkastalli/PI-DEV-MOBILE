@@ -44,6 +44,11 @@ public class AnimalPerdu {
         
     }
 
+    public AnimalPerdu(boolean etat, String lieu_disparition) {
+        this.etat = etat;
+        this.lieu_disparition = lieu_disparition;
+    }
+
    
 
     public AnimalPerdu(int id, int id_animal, Date date_disparition, String lieu_disparition, String etat1) {

@@ -112,9 +112,10 @@ float s=0;
                         listTasks.add(vot);
 
                         for (int i = 0; i < listTasks.size(); i++) {
-                             s = listTasks.get(i)+s;   
+                             s = listTasks.get(i)+s; 
+                             s=((float) ((int) ((s/listTasks.size())*100))) / 100;
                 }
-               s=((float) ((int) ((s/listTasks.size())*100))) / 100;
+               
                     }
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());

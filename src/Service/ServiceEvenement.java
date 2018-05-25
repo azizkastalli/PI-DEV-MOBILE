@@ -89,7 +89,7 @@ public class ServiceEvenement implements IntService<Evenement>{
         
           ArrayList<Evenement> listEvent = new ArrayList<>();
            ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/all");
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/all4");
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {

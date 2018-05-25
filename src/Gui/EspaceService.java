@@ -24,17 +24,17 @@ public class EspaceService {
      private Form f;
      
      public EspaceService() {
-        f = new Form(new BoxLayout(BoxLayout.Y_AXIS));
+        f = new Form("Espace Services",new BoxLayout(BoxLayout.Y_AXIS));
         Button Sdf = new Button("AnimalSdf");
         Button gestion = new Button("Liste Sdf");
         Button ajout = new Button("ajout");
         Button stat = new Button("Stats");
         Button P = new Button ("Liste Animal Perdu");
-        Container gestionService = new Container();
-        Container ajoutService = new Container();
-        Container ajoutSdf = new Container();
-        Container Stat = new Container();
-         Container AP = new Container();
+        Container gestionService = new Container(new BoxLayout(BoxLayout.Y_AXIS));
+        Container ajoutService = new Container(new BoxLayout(BoxLayout.Y_AXIS));
+        Container ajoutSdf = new Container(new BoxLayout(BoxLayout.Y_AXIS));
+        Container Stat = new Container(new BoxLayout(BoxLayout.Y_AXIS));
+         Container AP = new Container(new BoxLayout(BoxLayout.Y_AXIS));
         
         
         gestionService.add(gestion);
@@ -42,6 +42,7 @@ public class EspaceService {
         ajoutSdf.add(Sdf);
         Stat.add(stat);
         AP.add(P);
+       
         
         f.addAll(gestionService,ajoutService,ajoutSdf,Stat,AP);
         
@@ -95,6 +96,71 @@ public class EspaceService {
                 }
             }
         });
+        
+        f.getToolbar().addCommandToSideMenu("Menu Principale",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Gui.allProduit panpage = new Gui.allProduit();
+                 panpage.getF().show();
+             }
+         });
+            
+          f.getToolbar().addCommandToSideMenu("voir panier",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Gui.Panier panpage = new Gui.Panier();
+                 panpage.getF().show();
+             }
+         });
+          f.getToolbar().addCommandToSideMenu("voir actualité",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Actualite actpage = new Actualite();
+                 actpage.getF().show();
+                 
+             }
+         });
+          f.getToolbar().addCommandToSideMenu("Les evenements",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 try {
+                     AffichageEvent afepage = new AffichageEvent();
+                     afepage.getF().show();
+                 } catch (IOException ex) {
+                    
+                 }
+                 
+             }
+         });
+          f.getToolbar().addCommandToSideMenu("Espace services",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 EspaceService afepage = new EspaceService();
+                 afepage.getF().show();
+                 
+             }
+         });
+          f.getToolbar().addCommandToSideMenu("Les encheres",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 try {
+                     AllEncheres afepage = new AllEncheres();
+                     afepage.getF().show();
+                 } catch (IOException ex) {
+                     
+                 }
+                 
+             }
+         });
+          f.getToolbar().addCommandToSideMenu("Se déconnecter",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Login afepage = new Login();
+                 afepage.getF().show();
+                 
+             }
+         });
+         
      }    
 
     public Form getF() {

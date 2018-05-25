@@ -151,5 +151,41 @@ public class ServiceAnimalperdu implements IntService<AnimalPerdu>{
          System.out.println("just before sending : " + listAn);
           return listAn;  
      } 
+     public ArrayList<AnimalPerdu> getEtat() {
+      ArrayList<AnimalPerdu> listAn = new ArrayList<>();
+       ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/service/allEtat");
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+
+                JSONParser jsonp = new JSONParser();
+                         
+                try {
+                    Map<String, Object> event1 = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
+                    System.out.println(event1);
+                    List<Map<String, Object>> list = (List<Map<String, Object>>) event1.get("root");
+                    for (Map<String, Object> obj : list) {
+                        
+                              Boolean etat = Boolean.valueOf(obj.get("etat").toString());
+                            AnimalPerdu a = new AnimalPerdu(etat, obj.get("lieuDisparition").toString());
+                            
+                  // float nbr= Float.parseFloat(obj.get("").toString());
+                   //float age= Float.parseFloat(obj.get("age").toString());
+                     
+                     listAn.add(a);
+                      // a.setId((int) nbr);
+                             
+            }
+        }       catch (IOException ex) {
+                }
+        
+        
+    }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+         System.out.println("just before sending : " + listAn);
+          return listAn;  
+     }
 }
      

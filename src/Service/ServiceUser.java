@@ -35,6 +35,15 @@ public class ServiceUser implements IntService<User> {
           
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
+        String Url2 = "http://localhost/pidev3.0/web/app_dev.php/ChangePassword"+"/"+obj.getUsername()+"/"+obj.getPassword();
+        System.out.println(Url2);
+        con.setUrl(Url2);
+        con.addResponseListener((e) -> {
+            String str = new String(con.getResponseData());
+            System.out.println(str);
+          
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
 
     }
 
@@ -90,7 +99,7 @@ public class ServiceUser implements IntService<User> {
     @Override
     public User get(User obj) {
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/finus/"+obj.getUsername());
+        con.setUrl("http://localhost/pidev3.0/web/app_dev.php/loginc/"+obj.getUsername()+"/"+obj.getPassword());
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -99,23 +108,24 @@ public class ServiceUser implements IntService<User> {
                 try {
                     Map<String, Object> tasks = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
                     System.out.println(tasks);
-                    Map<String, Object> obje;
-                    obje = (Map<String, Object>) tasks;
+                    List<Map<String, Object>> list = (List<Map<String, Object>>) tasks.get("root");
+                    for (Map<String, Object> obje : list) {
+                    
                     
                         User prod = new User();
                         
                        List<String> poi = (List<String>) obje.get("roles");
-                        System.out.println(obje);
+                        System.out.println("obje"+obje);
                         float id = Float.parseFloat(obje.get("id").toString());
                         prod.setEmail(obje.get("email").toString());
                         prod.setPassword(obje.get("password").toString());
                         prod.setRoles(obje.get("roles").toString());
                         prod.setId((int) id);
-                        
+                    
                         obj.setEmail(prod.getEmail());
                         obj.setPassword(prod.getPassword());
                         obj.setRoles(poi.get(0));
-                        obj.setId(prod.getId());
+                        obj.setId(prod.getId());}
                        
                        
                         

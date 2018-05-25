@@ -51,9 +51,10 @@ public class AffichageEvent {
          ArrayList<Evenement> listeEvent = SE.getAll();
          System.out.println("listaa : "+listeEvent);
          
-          f.getToolbar().addCommandToRightBar("back", null, (ev)->{EspaceMagasin EM=new EspaceMagasin();
-          EM.getF().show();
+         f.getToolbar().addCommandToRightBar("back", null, (ev)->{EspaceService ES=new EspaceService();
+          ES.getF().show();
           });
+         
          
          for(Evenement e : listeEvent)
       {
@@ -63,7 +64,7 @@ public class AffichageEvent {
           EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
           
         
-          Image img=URLImage.createToStorage(encImage,e.getNom(),"http://localhost/pidev4.0/web/images/"+e.getNom_image(), URLImage.RESIZE_SCALE);
+          Image img=URLImage.createToStorage(encImage,e.getNom(),"http://localhost/pidev3.0/web/images/"+e.getNom_image(), URLImage.RESIZE_SCALE);
     image.setImage(img);
           
           SpanLabel label = new SpanLabel(e.getNom());
@@ -84,7 +85,7 @@ public class AffichageEvent {
           EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
           
         
-          Image img=URLImage.createToStorage(encImage,e.getNom(),"http://localhost/pidev4.0/web/images/"+e.getNom_image(), URLImage.RESIZE_SCALE);
+          Image img=URLImage.createToStorage(encImage,e.getNom(),"http://localhost/pidev3.0/web/images/"+e.getNom_image(), URLImage.RESIZE_SCALE);
     image.setImage(img);
           
           SpanLabel nom = new SpanLabel("nom : "+e.getNom());
@@ -94,11 +95,74 @@ public class AffichageEvent {
 
              Button Partage = new Button("Partage");
            Form h2 = new Form("Details ", new BoxLayout(BoxLayout.Y_AXIS));
-               
+           
+           h2.getToolbar().addCommandToSideMenu("Menu Principale",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Gui.allProduit panpage = new Gui.allProduit();
+                 panpage.getF().show();
+             }
+         });
+            
+          h2.getToolbar().addCommandToSideMenu("voir panier",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Gui.Panier panpage = new Gui.Panier();
+                 panpage.getF().show();
+             }
+         });
+          h2.getToolbar().addCommandToSideMenu("voir actualité",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Actualite actpage = new Actualite();
+                 actpage.getF().show();
+                 
+             }
+         });
+          h2.getToolbar().addCommandToSideMenu("Les evenements",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 try {
+                     AffichageEvent afepage = new AffichageEvent();
+                     afepage.getF().show();
+                 } catch (IOException ex) {
+                    
+                 }
+                 
+             }
+         });
+          h2.getToolbar().addCommandToSideMenu("Espace services",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 EspaceService afepage = new EspaceService();
+                 afepage.getF().show();
+                 
+             }
+         });
+          h2.getToolbar().addCommandToSideMenu("Les encheres",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 try {
+                     AllEncheres afepage = new AllEncheres();
+                     afepage.getF().show();
+                 } catch (IOException ex) {
+                     
+                 }
+                 
+             }
+         });
+          h2.getToolbar().addCommandToSideMenu("Se déconnecter",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Login afepage = new Login();
+                 afepage.getF().show();
+                 
+             }
+         });
          
                     Container c2 =new Container(new BoxLayout(BoxLayout.Y_AXIS));
                     
-            c2.addAll(image,nom,desc,nbr,dateD,Partage);
+            h2.addAll(image,nom,desc,nbr,dateD,Partage);
                 Partage.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
@@ -150,6 +214,60 @@ public class AffichageEvent {
         
           
       }
+      f.getToolbar().addCommandToSideMenu("Menu Principale",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 allProduit afepage = new allProduit();
+                 afepage.getF().show();
+                 
+             }
+         });
+      
+          f.getToolbar().addCommandToSideMenu("voir panier",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Gui.Panier panpage = new Gui.Panier();
+                 panpage.getF().show();
+             }
+         });
+          f.getToolbar().addCommandToSideMenu("voir actualité",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Actualite actpage = new Actualite();
+                 actpage.getF().show();
+                 
+             }
+         });
+         
+          f.getToolbar().addCommandToSideMenu("Espace services",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 EspaceService afepage = new EspaceService();
+                 afepage.getF().show();
+                 
+             }
+         });
+          f.getToolbar().addCommandToSideMenu("Les encheres",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 try {
+                     AllEncheres afepage = new AllEncheres();
+                     afepage.getF().show();
+                 } catch (IOException ex) {
+                     
+                 }
+                 
+             }
+         });
+          f.getToolbar().addCommandToSideMenu("Se déconnecter",null, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent d) {
+                 Login afepage = new Login();
+                 afepage.getF().show();
+                 
+             }
+         });
+      
       
       f.add(event);
          
